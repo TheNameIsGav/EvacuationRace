@@ -7,10 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="EvacuationRace" />
+        <module name="myexp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="EvacuationRace" target="1.8" />
+      <module name="myexp" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
