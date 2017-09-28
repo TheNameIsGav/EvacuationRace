@@ -8,37 +8,37 @@
 
 <body>
     <div id="page">
-        <div id="header">
+<!--Commented Already-->        <div id="header"> <!--Resources along the top of the market UI, -->
             <div class="resource" id="firstResource">
-                <div class="resourceIcon" style="background: grey" title="Metal"></div>
-                <span class="resourceAmount">0</span>
+                <div class="resourceIcon" style="background: grey" title="Metal"></div> <!--Declaration for Top UI Metal OnHover-->
+                <span id="metalCount" class="resourceAmount">0</span>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: whitesmoke" title="Ice"></div>
+                <div class="resourceIcon" style="background: LightSkyBlue  " title="Ice"></div> <!--Declaration for Top UI Ice OnHover-->
                 <div class="resourceAmount">10</div>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: darkolivegreen" title="Organics"></div>
+                <div class="resourceIcon" style="background: darkolivegreen" title="Organics"></div> <!--Declaration for Top UI Organics OnHover-->
                 <div class="resourceAmount">100</div>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: darkblue" title="Hydrogen"></div>
+                <div class="resourceIcon" style="background: yellow" title="Hydrogen"></div> <!--Declaration for Top UI Hydrogen OnHover-->
                 <div class="resourceAmount">1000</div>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: darkgoldenrod" title="Rare"></div>
+                <div class="resourceIcon" style="background: GoldenRod" title="Rare"></div> <!--Declaration for Top UI Rare OnHover-->
                 <div class="resourceAmount">10000</div>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: deeppink" title="XXX-Rare"></div>
+                <div class="resourceIcon" style="background: deeppink" title="Extremium"></div> <!--Declaration for Top UI Extremium OnHover-->
                 <div class="resourceAmount">1000</div>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: purple" title="Iridium"></div>
+                <div class="resourceIcon" style="background: purple" title="Deuterium"></div> <!--Declaration for Top UI Deuterium OnHover-->
                 <div class="resourceAmount">100</div>
             </div>
             <div class="resource">
-                <div class="resourceIcon" style="background: yellow" title="Uranium"></div>
+                <div class="resourceIcon" style="background:  lightseagreen" title="Uranium"></div> <!--Declaration for Top UI Uranium OnHover-->
                 <div class="resourceAmount">10</div>
             </div>
             <div id="phase">Phase</div>
@@ -46,8 +46,8 @@
         </div>
         <div id="midpage">
             <div id="trade">
-                <div class="dropdown" id="dropdowndiv">
-                    <button onclick="myFunction()" id="dropdownButton" class="dropbtn">Player: </button>
+                <div class="dropdown" id="dropdowndiv"> <!--Dropdown Menu-->
+                    <button onclick="myFunction()" id="dropdownButton" class="dropbtn">Trade Partner: </button>
                     <div id="myDropdown" class="dropdown-content">
                         <div class="jimmy tradeDropdown">Jimmy</div>
                         <div class="sam tradeDropdown">Sam</div>
@@ -57,15 +57,15 @@
                     </div>
                 </div>
                 <div id="tradeResourceList">
-                    <div id="resourceIconColumn">
+                    <div id="resourceIconColumn"> <!-- Trade resources icon listings (LeftSide)-->
                         <div class="resourceIcon" id="firstResourceTrade" style="background: grey" title="Metal"></div>
-                        <div class="resourceIcon" style="background: whitesmoke" title="Ice"></div>
+                        <div class="resourceIcon" style="background: LightSkyBlue" title="Ice"></div>
                         <div class="resourceIcon" style="background: darkolivegreen" title="Organics"></div>
-                        <div class="resourceIcon" style="background: darkblue" title="Hydrogen"></div>
-                        <div class="resourceIcon" style="background: darkgoldenrod" title="Rare"></div>
-                        <div class="resourceIcon" style="background: deeppink" title="XXX-Rare"></div>
-                        <div class="resourceIcon" style="background: purple" title="Iridium"></div>
-                        <div class="resourceIcon" style="background: yellow" title="Uranium"></div>
+                        <div class="resourceIcon" style="background: yellow" title="Hydrogen"></div>
+                        <div class="resourceIcon" style="background: GoldenRod" title="Rare"></div>
+                        <div class="resourceIcon" style="background: deeppink" title="Extremium"></div>
+                        <div class="resourceIcon" style="background: purple" title="Deuterium"></div>
+                        <div class="resourceIcon" style="background: lightseagreen" title="Uranium"></div>
                     </div>
                     <div class="inputFieldColumn">
                         <div id="give">Give</div>
@@ -79,7 +79,7 @@
                         <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
                     </div>
                     <div class="inputFieldColumn">
-                        <div id="take">Take</div>
+                        <div id="take">Request</div> <!-- Change all instances of "take" to "request"-->
                         <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
                         <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
                         <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
@@ -93,7 +93,7 @@
                 <button id="sendButton">Send</button>
             </div>
             <div id="playersAndDebts">
-                <ul id="playerList">
+                <ul id="playerList"> <!--Fix this to reflect variables not constants--><!--FIX COMMAS-->
                     <li id="playerListTitle">Players:</li>
                     <li class="evan">Evan,</li>
                     <li class="jimmy">Jimmy,</li>
@@ -104,7 +104,7 @@
                 <div id="debts">
                     <div class="debtEntry">
                         <div class="DCInfo">
-                            <div class="resourceIcon debtIcon" style="background: darkblue" title="Hydrogen"></div>
+                            <div class="resourceIcon debtIcon" style="background: yellow" title="Hydrogen"></div>
                             <div class="svgCreditDebtIcon" title="Credit">
                                 <svg width="20" height="20" version="1.1" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="0" y="0" width="20" height="20" fill="green" />
