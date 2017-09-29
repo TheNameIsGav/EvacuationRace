@@ -68,29 +68,29 @@
                         <div class="resourceIcon" style="background: lightseagreen" title="Uranium"></div>
                     </div>
                     <div class="inputFieldColumn">
-                        <div id="give">Give</div>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea sender" rows="1" placeholder="0"></textarea>
+                        <div id="give">Give</div> <!--This is the Give text boxes-->
+                        <textarea class="tradeTextArea sender" id="giveMetal" rows="1" placeholder="0"></textarea> <!-- Metal -->
+                        <textarea class="tradeTextArea sender" id="giveIce" rows="1" placeholder="0"></textarea> <!--Ice-->
+                        <textarea class="tradeTextArea sender" id="giveOrganics" rows="1" placeholder="0"></textarea> <!--Organics-->
+                        <textarea class="tradeTextArea sender" id="giveHydrogen" rows="1" placeholder="0"></textarea><!--Hydrogen-->
+                        <textarea class="tradeTextArea sender" id="giveRare" rows="1" placeholder="0"></textarea><!--Rare-->
+                        <textarea class="tradeTextArea sender" id="giveExtremium" rows="1" placeholder="0"></textarea><!--Extremium-->
+                        <textarea class="tradeTextArea sender" id="giveDeuterium" rows="1" placeholder="0"></textarea><!--Deuterium-->
+                        <textarea class="tradeTextArea sender" id="giveUranium" rows="1" placeholder="0"></textarea><!--Uranium-->
                     </div>
                     <div class="inputFieldColumn">
                         <div id="take">Request</div> <!-- Change all instances of "take" to "request"-->
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
-                        <textarea class="tradeTextArea reciever" rows="1" placeholder="0"></textarea>
+                        <textarea class="tradeTextArea reciever" id="recieveMetal" rows="1" placeholder="0"></textarea> <!-- Metal -->
+                        <textarea class="tradeTextArea reciever" id="recieveIce" rows="1" placeholder="0"></textarea>  <!--Ice-->
+                        <textarea class="tradeTextArea reciever" id="recieveOrganics" rows="1" placeholder="0"></textarea> <!--Organics-->
+                        <textarea class="tradeTextArea reciever" id="recieveHydrogen" rows="1" placeholder="0"></textarea> <!--Hydrogen-->
+                        <textarea class="tradeTextArea reciever" id="recieveRare" rows="1" placeholder="0"></textarea> <!--Rare-->
+                        <textarea class="tradeTextArea reciever" id="recieveExtermium" rows="1" placeholder="0"></textarea> <!--Extremium-->
+                        <textarea class="tradeTextArea reciever" id="receiveDeuterium" rows="1" placeholder="0"></textarea> <!--Deuterium-->
+                        <textarea class="tradeTextArea reciever" id="recieveUranium" rows="1" placeholder="0"></textarea> <!--Uranium-->
                     </div>
                 </div>
-                <button id="sendButton">Send</button>
+                <button id="sendButton">Send</button> <!--Send Button-->
             </div>
             <div id="playersAndDebts">
                 <ul id="playerList"> <!--Fix this to reflect variables not constants--><!--FIX COMMAS-->
@@ -128,8 +128,8 @@
                                     <line x1="5" x2="15" y1="10" y2="10" stroke="black" stroke-width="4" />
                                 </svg>
                             </div>
-                            <div class="debtCreditAmount">100000</div>
-                            <div class="playerOwedCredited andrew">Andrew__Hall</div>
+                            <div class="debtCreditAmount">1</div>
+                            <div class="playerOwedCredited andrew">Andrew</div>
                         </div>
                         <div class="DCNotes">
                             <textarea spellcheck="false" class="DCTextArea" rows="1" placeholder="Notes"></textarea>
