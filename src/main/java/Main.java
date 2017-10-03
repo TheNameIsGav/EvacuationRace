@@ -6,23 +6,43 @@ import spark.Spark;
 import java.util.Arrays;
 
 import static spark.Spark.*;
+import static spark.route.HttpMethod.get;
 
 public class Main {
 
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
-        post("/chat/createMessage", (req, res) -> {
-            System.out.println(req.body());
+        post("/chat/createMessage", (request, response) -> {
+            System.out.println(request.body());
+            response.body(request.body());
+
             return "";
         });
 
-        post("/trade/createRequest", (req, res) -> {
-            System.out.println(req.body());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        post("/trade/createRequest", (request, response) -> {
+            System.out.println(request.body());
             return "";
         });
 
-        get("/map/getBoard", (req, res) -> {
+        Spark.get("/map/getBoard", (req, res) -> {
             logger.info("GET request to /map/getBoard");
             Map m = new Map(10, 14);
             m.generateInlandOceans();

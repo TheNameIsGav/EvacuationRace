@@ -10,14 +10,16 @@ function newChatMessage() {
             "message" : document.getElementById("chatTextArea").value
         }
         document.getElementById("chatTextArea").value = "";
-        POST(JSON.stringify(message), "/chat/createMessage");
+        POST(JSON.stringify(message), "/chat/createMessage", "messages");
     }
 }
 
-function POST(string, destination) {
+
+function POST(string, destination, elementID) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4567" + destination);
     xhr.send(string);
+    console.log(this.responseText + "help");
 }
 
 var tradeDropdownNL = document.getElementsByClassName("tradeDropdown");
