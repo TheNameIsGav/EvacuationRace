@@ -11,6 +11,7 @@ function newChatMessage() {
         }
         document.getElementById("chatTextArea").value = "";
         POST(JSON.stringify(message), "/chat/createMessage", "messages");
+        GET("/chat/createMessage", "messages");
     }
 }
 
@@ -19,7 +20,13 @@ function POST(string, destination, elementID) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4567" + destination);
     xhr.send(string);
-    console.log(this.responseText + "help");
+    return "";
+}
+
+function GET(destination, elementID){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:4567" + destination, true);
+    return "";
 }
 
 var tradeDropdownNL = document.getElementsByClassName("tradeDropdown");
