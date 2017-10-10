@@ -10,7 +10,7 @@ function newChatMessage() {
             "message" : document.getElementById("chatTextArea").value
         }
         document.getElementById("chatTextArea").value = "";
-        POST(JSON.stringify(message), "/chat/createMessage", "messages");
+/chat/createMessage
         GET("/chat/createMessage", "messages");
     }
 }
