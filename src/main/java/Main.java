@@ -12,6 +12,7 @@ import static spark.route.HttpMethod.get;
 
 
 public class Main {
+    public static Map m; //declared outside to be global?
 
     private static ArrayList chat = new ArrayList();
 
@@ -40,15 +41,18 @@ public class Main {
 
         Spark.get("/map/getBoard", (req, res) -> {
             logger.info("GET request to /map/getBoard");
-            Map m = new Map(10, 14);
-            m.generateInlandOceans();
-            m.generateIceWaterPoles();
-            m.generatePeninsulas();
-            m.generateDoubleHexes();
-            m.removeClumps();
-            m.evenOutPoles();
-            int[][] map = m.getMap();
-            for (int[] i : map) {
+            int[][] map;
+            if(m == null) { //if map has not been initialized, this initializes the map
+                m = new Map(10, 14); //map initialized here if not initialized previously
+                m.generateInlandOceans();
+                m.generateIceWaterPoles();
+                m.generatePeninsulas();
+                m.generateDoubleHexes();
+                m.removeClumps();
+                m.evenOutPoles();
+            }
+            map = m.getMap();
+            for (int[] i : map) {  //prints out the map array no matter what
                 System.out.println(Arrays.toString(i));
             }
             return m;

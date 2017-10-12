@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Map {
+    public boolean initialized  = false;
     private int rows;
     private int cols;
     private int[][] map;
