@@ -10,13 +10,13 @@ function newChatMessage() {
             "message" : document.getElementById("chatTextArea").value
         }
         document.getElementById("chatTextArea").value = "";
-/chat/createMessage
+        POST(JSON.stringify(message), "/chat/createMessage");
         GET("/chat/createMessage", "messages");
     }
 }
 
 
-function POST(string, destination, elementID) {
+function POST(string, destination) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4567" + destination);
     xhr.send(string);
