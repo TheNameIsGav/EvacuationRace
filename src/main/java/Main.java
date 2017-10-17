@@ -26,7 +26,7 @@ public class Main {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
 
-        post("/chat/createMessage", (request, response) -> {
+        Spark.post("/chat/createMessage", (request, response) -> {
             String[] parts = request.body().split("\"");
             String user = parts[3];
             String message = parts[7];
@@ -35,6 +35,10 @@ public class Main {
             return "";
         });
 
+        Spark.get("/chat/createMessage", (request, response) -> {
+            logger.info("get request to /chat/createMessage");
+            return chat;
+        });
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());
             return "";
@@ -46,12 +50,6 @@ public class Main {
             if(m == null) { //if map has not been initialized, this initializes the map
                 m = new Map(14, 10); //map initialized here if not initialized previously
                 m.generateRandom();
-            //    m.generateInlandOceans();
-            //    m.generateIceWaterPoles();
-            //    m.generatePeninsulas();
-            //    m.generateDoubleHexes();
-            //    m.removeClumps();
-            //    m.evenOutPoles();
             }
             map = m.getMap();
             for (int[] i : map) {  //prints out the map array no matter what
