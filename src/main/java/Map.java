@@ -12,9 +12,9 @@ public class Map {
 
     public Map(int rows, int cols) {
         logger = LoggerFactory.getLogger(Map.class);
-        this.rows = cols;
-        this.cols = rows;
-        map = new int[cols][rows];
+        this.rows = rows;
+        this.cols = cols;
+        map = new int[rows][cols];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 map[i][j] = (int) (Math.random() * 2);//metal = 0. organics = 1, ice = 2, ocean = 3, double metal = 4, ice metal = 5, double ice = 6
@@ -24,6 +24,19 @@ public class Map {
 
     public int[][] getMap() {
         return map;
+    }
+
+    public void generateRandom() {
+        System.out.println("generateRandom was called");
+        System.out.println("rows = " + rows + " and cols = " + cols);
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                int tileID = 0;
+                map[cols][rows] = tileID;
+                System.out.print(tileID);
+            }
+            System.out.println("-");
+        }
     }
 
     public void generateInlandOceans() {

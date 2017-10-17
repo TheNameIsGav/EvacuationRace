@@ -24,6 +24,7 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
+
         post("/chat/createMessage", (request, response) -> {
             String[] parts = request.body().split("\"");
             String user = parts[3];
@@ -32,7 +33,6 @@ public class Main {
             System.out.println(chat.get(chat.size() -1));
             return "";
         });
-
 
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());
@@ -43,7 +43,8 @@ public class Main {
             logger.info("GET request to /map/getBoard");
             int[][] map;
             if(m == null) { //if map has not been initialized, this initializes the map
-                m = new Map(10, 14); //map initialized here if not initialized previously
+                m = new Map(14, 10); //map initialized here if not initialized previously
+            //    m.generateRandom();
                 m.generateInlandOceans();
                 m.generateIceWaterPoles();
                 m.generatePeninsulas();
