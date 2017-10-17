@@ -166,6 +166,9 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
+                default: {
+                    console.log("unrecognised value at (" + rows + "," + cols +")" )
+                }
             }
             var newHex = new Hex(rows, cols, type, idCounter + "H", (backgroundHex.id || -1) + "B");
             this.addHex(newHex);
@@ -173,11 +176,12 @@ Board.prototype.drawMap = function () {
             map.appendChild(hexElement);
         }
     }
+
 }
 
 function drawHex() {
     var hex = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    hex.setAttribute("fill", "#ff0000");
+    hex.setAttribute("fill", "#000000");
     hex.setAttribute("points", "15 0 20 8.7 15 17.4 5 17.4 0 8.7 5 0");
     return hex;
 }

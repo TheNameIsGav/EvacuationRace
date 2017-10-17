@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Map {
-    public boolean initialized  = false;
     private int rows;
     private int cols;
     private int[][] map;
@@ -23,22 +22,21 @@ public class Map {
     }
 
     public int[][] getMap() {
+        System.out.println("getMap was called");
         return map;
     }
 
     public void generateRandom() {
         System.out.println("generateRandom was called");
-        System.out.println("rows = " + rows + " and cols = " + cols);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int tileID = 0;
-                map[cols][rows] = tileID;
-                System.out.print(tileID);
+                int tileID = (int) (Math.random() * 7); //picks a random tile from 0 to 6
+                map[r][c] = tileID;
             }
-            System.out.println("-");
         }
     }
-
+}
+/*
     public void generateInlandOceans() {
         int row = 0;
         int col = 0;
@@ -286,4 +284,4 @@ public class Map {
     public void evenOutPoles() {
 
     }
-}
+}*/

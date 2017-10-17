@@ -44,13 +44,13 @@ public class Main {
             int[][] map;
             if(m == null) { //if map has not been initialized, this initializes the map
                 m = new Map(14, 10); //map initialized here if not initialized previously
-            //    m.generateRandom();
-                m.generateInlandOceans();
-                m.generateIceWaterPoles();
-                m.generatePeninsulas();
-                m.generateDoubleHexes();
-                m.removeClumps();
-                m.evenOutPoles();
+                m.generateRandom();
+            //    m.generateInlandOceans();
+            //    m.generateIceWaterPoles();
+            //    m.generatePeninsulas();
+            //    m.generateDoubleHexes();
+            //    m.removeClumps();
+            //    m.evenOutPoles();
             }
             map = m.getMap();
             for (int[] i : map) {  //prints out the map array no matter what
