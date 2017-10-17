@@ -12,6 +12,7 @@ import static spark.route.HttpMethod.get;
 
 
 public class Main {
+    public static Map m; //declared outside to be global?
 
     private static ArrayList chat = new ArrayList();
     private static ArrayList tradeRequest = new ArrayList();
@@ -24,6 +25,7 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
+
         post("/chat/createMessage", (request, response) -> {
             String[] parts = request.body().split("\"");
             String user = parts[3];
@@ -33,7 +35,6 @@ public class Main {
             return "";
         });
 
-
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());
             return "";
@@ -41,15 +42,19 @@ public class Main {
 
         Spark.get("/map/getBoard", (req, res) -> {
             logger.info("GET request to /map/getBoard");
-            Map m = new Map(10, 14);
-            m.generateInlandOceans();
-            m.generateIceWaterPoles();
-            m.generatePeninsulas();
-            m.generateDoubleHexes();
-            m.removeClumps();
-            m.evenOutPoles();
-            int[][] map = m.getMap();
-            for (int[] i : map) {
+            int[][] map;
+            if(m == null) { //if map has not been initialized, this initializes the map
+                m = new Map(14, 10); //map initialized here if not initialized previously
+                m.generateRandom();
+            //    m.generateInlandOceans();
+            //    m.generateIceWaterPoles();
+            //    m.generatePeninsulas();
+            //    m.generateDoubleHexes();
+            //    m.removeClumps();
+            //    m.evenOutPoles();
+            }
+            map = m.getMap();
+            for (int[] i : map) {  //prints out the map array no matter what
                 System.out.println(Arrays.toString(i));
             }
             return m;
