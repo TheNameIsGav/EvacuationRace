@@ -14,6 +14,7 @@ import static spark.route.HttpMethod.get;
 public class Main {
 
     private static ArrayList chat = new ArrayList();
+    private static ArrayList tradeRequest = new ArrayList();
 
     private static void adder(String user, String message) { //Method with User ID and Name
         String totalMessage = user + ": " + message;
