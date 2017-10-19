@@ -6,18 +6,41 @@ import org.slf4j.LoggerFactory;
 public class Map {
     private int rows;
     private int cols;
+    private int mapType;
+    private int numOrbits;
     private int[][] map;
     private Logger logger;
 
-    public Map(int rows, int cols) {
+    public Map(int rs, int cs, int mType) {
         logger = LoggerFactory.getLogger(Map.class);
-        this.rows = rows;
-        this.cols = cols;
+        rows = rs;
+        cols = cs;
+        mapType = mType;
         map = new int[rows][cols];
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                map[i][j] = (int) (Math.random() * 2);//metal = 0. organics = 1, ice = 2, ocean = 3, double metal = 4, ice metal = 5, double ice = 6
+
+        if(mType == 0) {        //earth-like planet
+            generateTerran();
+        } else if(mType == 1) {     //mercury-like planet
+            generateMercurial();
+        } else if(mType == 2) {     //mars-like planet
+            generateMartian();
+        } else if(mType == 3) {     //venus-like planet
+            generateVenutian();
+        } else if(mType == 4) {     //alien planet
+            generateAlien();
+        } else if(mType == 5) {     //jupiter-like planet
+            generateJovian();
+        } else if(mType == 6) {     //neptune-like planet
+            generateNeptunian();
+        } else if(mType == 7) {     //pluto-like planet
+            generatePlutonian();
+        } else {
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[i].length; j++) {
+                    map[i][j] = (int) (Math.random() * 2);//metal = 0. organics = 1, ice = 2, ocean = 3, double metal = 4, ice metal = 5, double ice = 6
+                }
             }
+            numOrbits = 1;
         }
     }
 
@@ -26,14 +49,52 @@ public class Map {
         return map;
     }
 
-    public void generateRandom() {
-        System.out.println("generateRandom was called");
+    private void generateTerran() {
+        System.out.println("generateTerran was called");
+    }
+
+    private void generateMercurial() {
+        System.out.println("generateMercurial was called");
+
+    }
+
+    private void generateMartian() {
+        System.out.println("generateMartian was called");
+
+    }
+
+    private void generateVenutian() {
+        System.out.println("generateVenutian was called");
+
+    }
+
+    private void generateAlien() {
+        System.out.println("generateAlien was called");
+
+    }
+
+    private void generateJovian() {
+        System.out.println("generateJovian was called");
+        numOrbits = 2;                  //can randomly choose 1 or 2 orbits
+        mapType = 1;
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int tileID = (int) (Math.random() * 7); //picks a random tile from 0 to 6
+                int tileTypeID = (int) ((Math.random() * 2.1) + 13); //picks a random tile from 0 to 14
+                int tileID = tileTypeID + (mapType * 100);
                 map[r][c] = tileID;
             }
         }
+
+    }
+
+    private void generateNeptunian() {
+        System.out.println("generateNeptunian was called");
+
+    }
+
+    private void generatePlutonian() {
+        System.out.println("generatePlutonian was called");
+
     }
 }
 /*
