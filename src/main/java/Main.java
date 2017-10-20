@@ -43,9 +43,9 @@ public class Main {
         Spark.get("/map/getBoard", (req, res) -> {
             logger.info("GET request to /map/getBoard");
             int[][] map;
-//            if(m == null) { //if map has not been initialized, this initializes the map
-                m = new Map(6, 4, 5); //map initialized here if not initialized previously
-//            }
+            if(m == null) { //if map has not been initialized, this initializes the map
+                m = new Map(14, 10, 5); //map initialized here if not initialized previously
+            }
             map = m.getMap();
             for (int[] i : map) {  //prints out the map array no matter what
                 System.out.println(Arrays.toString(i));
