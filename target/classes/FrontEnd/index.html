@@ -3,22 +3,16 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="Login.css" />
-    <script src="Login.js"></script>
-    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="Main.css" />
+    <script src="Main.js"></script>
+    <title>Evacuation Race</title>
 </head>
 
 <body>
-    <div>
-        <form action="/">       <!-- where do it submit too? -->
-            <p>Username</p>
-            <input type = "text" name = "username">
-            <br>
-            <p>Password</p>
-            <input type = "password" name = "password">
-            <br>
-            <input type="submit" value="Submit">
-        </form>
+    <div id="buttonDiv">
+        <button onclick="window.location.href='Login.html'" class="mainButtons" id="login" title="Go to Login">Login</button>
+        <button onclick="window.location.href='Board.html'" class="mainButtons" id="board" title="Go to Board">Board</button>
+        <button onclick="window.location.href='Market.html'" class="mainButtons" id="market" title="Go to Market">Market</button>
     </div>
 </body>
 
