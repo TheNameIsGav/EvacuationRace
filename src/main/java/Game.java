@@ -27,4 +27,8 @@ public class Game {
 
         mapList = maps;
     }
+
+    public Map[] getMaps(){
+        return mapList;
+    }
 }

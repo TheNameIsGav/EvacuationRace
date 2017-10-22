@@ -49,8 +49,25 @@ public class Map {
         return map;
     }
 
+    public int getRows() {
+        return this.rows;
+    }
+
+    public int getCols() {
+        return this.cols;
+    }
+
     private void generateTerran() {
         System.out.println("generateTerran was called");
+        numOrbits = 2;
+        mapType = 0;           //should be 0, must fix js too tho
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                int tileTypeID = (int) ((Math.random() * 2.1) + 13); //picks a random tile from 0 to 14
+                int tileID = tileTypeID + (mapType * 100);
+                map[r][c] = tileID;
+            }
+        }
     }
 
     private void generateMercurial() {
@@ -76,7 +93,7 @@ public class Map {
     private void generateJovian() {
         System.out.println("generateJovian was called");
         numOrbits = 2;                  //can randomly choose 1 or 2 orbits
-        mapType = 1;
+        mapType = 5;
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 int tileTypeID = (int) ((Math.random() * 2.1) + 13); //picks a random tile from 0 to 14

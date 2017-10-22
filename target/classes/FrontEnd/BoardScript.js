@@ -129,27 +129,27 @@ Board.prototype.drawMap = function () {
             hexElement.addEventListener("click", unitTest);
             var backgroundHex;
             switch (board.typeMap[rows][cols]) {
-                case 100: {
+                case 0: {
                     hexElement.style.fill = "#6A6D78";
                     type = "metalHex";
                     break;
                 }
-                case 101: {
+                case 1: {
                     hexElement.style.fill = "#73896E";
                     type = "organicsHex";
                     break;
                 }
-                case 102: {
+                case 2: {
                     hexElement.style.fill = "#DDDDDD";
                     type = "iceHex";
                     break;
                 }
-                case 103: {
+                case 3: {
                     hexElement.style.fill = "#435985";
                     type = "oceanHex";
                     break;
                 }
-                case 104: {
+                case 4: {
                     hexElement.style.fill = "url(#doubleMetal)";
                     type = "doubleMetal";
                     backgroundHex = hexElement.cloneNode(true);
@@ -158,7 +158,7 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
-                case 105: {
+                case 5: {
                     hexElement.style.fill = "url(#iceMetal)";
                     backgroundHex = hexElement.cloneNode(true);
                     type = "iceMetal";
@@ -167,7 +167,7 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
-                case 106: {
+                case 6: {
                     hexElement.style.fill = "url(#doubleIce)";
                     type = "doubleIce";
                     backgroundHex = hexElement.cloneNode(true);
@@ -176,12 +176,12 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
-                case 107: {
+                case 7: {
                     hexElement.style.fill = "#daa520";
                     type = "rareHex";
                     break;
                 }
-                case 108: {
+                case 8: {
                     hexElement.style.fill = "url(#doubleIce)";
                     type = "metalRare";
                     backgroundHex = hexElement.cloneNode(true);
@@ -190,7 +190,7 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
-                case 109: {
+                case 9: {
                     hexElement.style.fill = "url(#doubleIce)";
                     type = "IceRare";
                     backgroundHex = hexElement.cloneNode(true);
@@ -199,32 +199,32 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
-                case 110: {
+                case 10: {
                     hexElement.style.fill = "#3d8f3d";
                     type = "weakOrganicsHex";
                     break;
                 }
-                case 111: {
+                case 11: {
                     hexElement.style.fill = "#338099";
                     type = "extremiumHex";
                     break;
                 }
-                case 112: {
+                case 12: {
                     hexElement.style.fill = "#00997a";
                     type = "uraniumHex";
                     break;
                 }
-                case 113: {
+                case 13: {
                     hexElement.style.fill = "#ffdf80";
                     type = "hydrogenHex1";
                     break;
                 }
-                case 114: {
+                case 14: {
                     hexElement.style.fill = "#ffd24d";
                     type = "hydrogenHex2";
                     break;
                 }
-                case 115: {
+                case 15: {
                     hexElement.style.fill = "#ff8000";
                     type = "deuteriumHex";
                     break;
