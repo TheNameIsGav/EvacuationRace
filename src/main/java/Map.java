@@ -7,19 +7,25 @@ public class Map {
     private int rows;
     private int cols;
     private int mapType;
+    private int subType;
     private int numOrbits;
     private int[][] map;
     private Logger logger;
 
-    public Map(int rs, int cs, int mType) {
+    public Map(int rs, int cs, int mType, int sType) {
         logger = LoggerFactory.getLogger(Map.class);
         rows = rs;
         cols = cs;
         mapType = mType;
+        subType = sType;
         map = new int[rows][cols];
 
         if(mType == 0) {        //earth-like planet
-            generateTerran();
+            if(sType == 0){
+                generateTerran0();
+            } else if(sType == 1){
+                generateTerran1();
+            }
         } else if(mType == 1) {     //mercury-like planet
             generateMercurial();
         } else if(mType == 2) {     //mars-like planet
@@ -57,8 +63,8 @@ public class Map {
         return this.cols;
     }
 
-    private void generateTerran() {
-        System.out.println("generateTerran was called");
+    private void generateTerran0() {
+        System.out.println("generateTerran0 was called");
         numOrbits = 2;
         mapType = 0;           //should be 0, must fix js too tho
         for (int r = 0; r < rows; r++) {
@@ -77,7 +83,7 @@ public class Map {
         int bayX = ((int) (Math.random() * (rows - 6))) + 3;
         int capeX = ((int) (Math.random() * (rows - 4))) + 2;
 
-        while(((capeX-bayX)>(0-4))&&((capeX-bayX)<4)){
+        while(((capeX-bayX)>(0-4))&&((capeX-bayX)<4)){          //can cause an infinite loop if there is no valid col
             capeX = ((int) (Math.random() * (rows - 6))) + 3;
         }
 
@@ -88,8 +94,30 @@ public class Map {
         changeAdjacent(capeX, 3, -1, 1, 100, 0);
         changeAdjacent(bayX,4, 3, 1, 100, 0);
 
-        randomize(-1, 50);
+        randomize(-1, 90, 0,1);  //sets iron and organic tiles up
     }
+
+    private void generateTerran1() {
+        System.out.println("generateTerran1 was called");
+        numOrbits = 2;
+        mapType = 0;           //should be 0, must fix js too tho
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                map[r][c] = -1;
+            }
+        }
+
+        changePolar(true, 2, 2, 50, 50);
+        changePolar(false, 2, 2, 50, 50);
+
+//        changeAdjacent((rows/2),(cols/2), 3, 3, 25, 25);
+        changeAdjacent(5,5,3,1,100,0);
+        System.out.println(numBordering(6,4,3));
+
+        randomize(-1, 66, 0,1);  //sets iron and organic tiles up
+        removeClumps(0,1);
+    }
+
 
     private void generateMercurial() {
         System.out.println("generateMercurial was called");
@@ -114,7 +142,7 @@ public class Map {
     private void generateJovian() {
         System.out.println("generateJovian was called");
         numOrbits = 2;
-        mapType = 0;           //should be 0, must fix js too tho
+        mapType = 0;
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 int tileTypeID = 0;
@@ -141,64 +169,64 @@ public class Map {
 
     private void changeAdjacent(int x, int y, int type, int r, int p, int pFade) {   //changes (x,y) and all tile surrounding for r steps. p is probability out of 100, and p fade is how much to add each step inwards (probability becomes 100% as you go in)
         int e = (x % 2);
-        if(r >= 3){
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+        if(r >= 3){                                                 //third ring
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y+3))){
                 map[x][y+3] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y-3))){
                 map[x][y-3] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+1,y+2+e))){
                 map[x+1][y+2+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-1,y+2+e))){
                 map[x-1][y+2+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+1,y-3+e))){
                 map[x+1][y-3+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-1,y-3+e))){
                 map[x-1][y-3+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+2,y+2))){
                 map[x+2][y+2] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-2,y-2))){
                 map[x-2][y-2] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+2,y-2))){
                 map[x+2][y-2] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-2,y+2))){
                 map[x-2][y+2] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+3,y-2+e))){
                 map[x+3][y-2+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+3,y-1+e))){
                 map[x+3][y-1+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+3,y+e))){
                 map[x+3][y+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x+3,y+1+e))){
                 map[x+3][y+1+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-3,y-2+e))){
                 map[x-3][y-2+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-3,y-1+e))){
                 map[x-3][y-1+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-3,y+e))){
                 map[x-3][y+e] = type;
             }
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x-3,y+1+e))){
                 map[x-3][y+1+e] = type;
             }
 
         }
-        if(r >= 2){
+        if(r >= 2){                                                 //second ring
             if((isProb(p + ((r-2) * pFade)))&&(isIn(x+2,y+1))){
                 map[x+2][y+1] = type;
             }
@@ -236,7 +264,7 @@ public class Map {
                 map[x-1][y-2+e] = type;
             }
         }
-        if(r >= 1){
+        if(r >= 1){                                                 //first ring
             if((isProb(p + ((r-1) * pFade)))&&(isIn(x+1,y))){
                 map[x+1][y] = type;
             }
@@ -256,12 +284,12 @@ public class Map {
                 map[x-1][y-1+(2*e)] = type;
             }
         }
-        if((isProb(p + (r * pFade)))&&(isIn(x,y))){
+        if((isProb(p + (r * pFade)))&&(isIn(x,y))){   //center always subjected to probability
             map[x][y] = type;
         }
     }
 
-    private void changePolar(boolean north, int type, int r, int p, int pFade) {
+    private void changePolar(boolean north, int type, int r, int p, int pFade) {    //applys a probability p with fade pFade to a radius r around a polar region.
         if(north){
             r--;
             while(r >= 0){
@@ -288,34 +316,71 @@ public class Map {
         }
     }
 
-    private void removeClumps(){        //should read through each tile on board and remove clumped tiles
+    private void removeClumps(int c1, int c2){        //reads through each c1 and c2 tile on board and remove clumped tiles, switching between c1 and c2
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                if(isIn(i,j)){
-
+                int type = map[i][j];
+                if(isIn(i,j)&&(numBordering(i,j,type) >= 4)){
+                    if(type == c1){
+                        map[i][j] = c2;
+                    }
+                    if(type == c2){
+                        map[i][j] = c1;
+                    }
                 }
             }
         }
     }
 
-    private void randomize(int t, int p){
+//    private void addUnique(int t, int repl, int n){
+//
+//        map[r][c]
+//    }
+
+    private void randomize(int t, int p, int c1, int c2){  //searches for tiles of type t and randomizes them between c1 and c2 according to p (probability of c1)
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                if(map[r][c] == t){
-                    int tileTypeID = 0;
+                if((map[r][c] % 100) == t){
+                    int tileTypeID;
                     if(isProb(p)){
-                        tileTypeID = 0;
+                        tileTypeID = c1;
                     } else {
-                        tileTypeID = 1;
+                        tileTypeID = c2;
                     }
                     int tileID = tileTypeID + (mapType * 100);
-                    map[r][c] = tileID;
+                    map[r][c] = (mapType * 100) + tileID;
                 }
             }
         }
     }
 
-    private boolean isIn(int x, int y){
+    private int numBordering(int x, int y, int t){      //returns number of tiles of type t that are hex-adjacent to map[x][y]
+        int count = 0;
+        int e = (x%2);
+
+        if(isIn(x+1,y)&&(map[x+1][y] == t)){
+            count++;
+        }
+        if(isIn(x-1,y)&&(map[x-1][y] == t)){
+            count++;
+        }
+        if(isIn(x,y+1)&&(map[x][y+1] == t)){
+            count++;
+        }
+        if(isIn(x,y-1)&&(map[x][y-1] == t)){
+            count++;
+        }
+        if(isIn(x+1,y-1+(2*e))&&(map[x+1][y-1+(2*e)] == t)){
+            count++;
+        }
+        if(isIn(x-1,y-1+(2*e))&&(map[x-1][y-1+(2*e)] == t)){
+            count++;
+        }
+
+        return count;
+    }
+
+    private boolean isIn(int x, int y){     //checks to see if tile at x,y is in map.
         return ((x>=0)&&(y>=0)&&(x<rows)&&(y<cols));
     }
 
@@ -323,6 +388,31 @@ public class Map {
         return (p > ((int) (Math.random() * 100)));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
     public void generateInlandOceans() {
         int row = 0;
