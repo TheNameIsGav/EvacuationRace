@@ -10,9 +10,8 @@ function newChatMessage() {
             "message" : document.getElementById("chatTextArea").value
         }
         document.getElementById("chatTextArea").value = "";
-        console.log("help");
         POST(JSON.stringify(message), "/chat/createMessage");
-        document.getElementById("messages").innerHTML(JSON.stringify(GET("/chat/createMessage")));
+        GET("/chat/createMessage", "messages");
     }
 }
 
@@ -24,22 +23,10 @@ function POST(string, destination) {
     return "";
 }
 
-function GET(destination){
-    var retVar = null;
+function GET(destination, elementID){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:4567" + destination, true);
-    xhr.onload = function (e)
-    {
-        if(xhr.readyState === 4 && xhr.status ===200)
-        {
-           retVar = JSON.parse(xhr.responseText);
-        } else {
-            console.error(xhr.status);
-        }
-    };
-    xhr.onerror = function (e) {console.error(xhr.statusText);};
-    xhr.send(null);
-    return retVar;
+    return "";
 }
 
 var tradeDropdownNL = document.getElementsByClassName("tradeDropdown");

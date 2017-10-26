@@ -46,7 +46,8 @@ function loadBuildingPhase() {
 }
 
 var board;
-function getMapBlueprint() {
+function getMapBlueprint() {    //gets blueprint and sets up planetary system map
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:4567/map/getBoard", true);
     xhr.onload = function (e) {
@@ -106,6 +107,15 @@ var Hex = function (row, col, type, id, backgroundHex) {
 
 Board.prototype.drawMap = function () {
     var map = document.getElementById("mapSVG");
+
+    console.log("Cols : " + this.rows + " ; Rows : " + this.cols + " (These values are flipped damn it)");
+
+    var w = (15 * this.rows) + 15; //original = 223
+    var h = (17.4 * this.cols) + 18.7; //original = 191
+
+    console.log("view box set to (0, 0, " + w + ", " + h + ")");
+    map.setAttribute("viewBox","0 0 " + w + " " + h);
+
     var idCounter = 0;
     for (var rows = 0; rows < this.rows; rows++) {
         for (var cols = 0; cols < this.cols; cols++) {
@@ -166,8 +176,61 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
+                case 7: {
+                    hexElement.style.fill = "#daa520";
+                    type = "rareHex";
+                    break;
+                }
+                case 8: {
+                    hexElement.style.fill = "url(#doubleIce)";
+                    type = "metalRare";
+                    backgroundHex = hexElement.cloneNode(true);
+                    backgroundHex.style.fill = "#DDDDDD";
+                    backgroundHex.id = idCounter;
+                    map.appendChild(backgroundHex);
+                    break;
+                }
+                case 9: {
+                    hexElement.style.fill = "url(#doubleIce)";
+                    type = "IceRare";
+                    backgroundHex = hexElement.cloneNode(true);
+                    backgroundHex.style.fill = "#DDDDDD";
+                    backgroundHex.id = idCounter;
+                    map.appendChild(backgroundHex);
+                    break;
+                }
+                case 10: {
+                    hexElement.style.fill = "#3d8f3d";
+                    type = "weakOrganicsHex";
+                    break;
+                }
+                case 11: {
+                    hexElement.style.fill = "#338099";
+                    type = "extremiumHex";
+                    break;
+                }
+                case 12: {
+                    hexElement.style.fill = "#00997a";
+                    type = "uraniumHex";
+                    break;
+                }
+                case 13: {
+                    hexElement.style.fill = "#ffdf80";
+                    type = "hydrogenHex1";
+                    break;
+                }
+                case 14: {
+                    hexElement.style.fill = "#ffd24d";
+                    type = "hydrogenHex2";
+                    break;
+                }
+                case 15: {
+                    hexElement.style.fill = "#ff8000";
+                    type = "deuteriumHex";
+                    break;
+                }
                 default: {
-                    console.log("unrecognised value at (" + rows + "," + cols +")" )
+                    console.log("unrecognised value at (" + rows + "," + cols +") - " + board.typeMap[rows][cols]);
                 }
             }
             var newHex = new Hex(rows, cols, type, idCounter + "H", (backgroundHex.id || -1) + "B");
@@ -182,6 +245,11 @@ Board.prototype.drawMap = function () {
 function drawHex() {
     var hex = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
     hex.setAttribute("fill", "#000000");
+//    var pointArr = [15, 0, 20, 8.7, 15, 17.4, 5, 17.4, 0, 8.7, 5, 0]
+//    for (int i = 0; i < pointArr.length; i++)
+//   {
+//        pointArr[i] *=
+//    }
     hex.setAttribute("points", "15 0 20 8.7 15 17.4 5 17.4 0 8.7 5 0");
     return hex;
 }
