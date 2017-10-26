@@ -63,11 +63,32 @@ public class Map {
         mapType = 0;           //should be 0, must fix js too tho
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int tileTypeID = (int) ((Math.random() * 2.1) + 13); //picks a random tile from 0 to 14
+                int tileTypeID = 0;
+                if (isProb(50)) {
+                    tileTypeID = 0;
+                } else {
+                    tileTypeID = 1;
+                }
                 int tileID = tileTypeID + (mapType * 100);
                 map[r][c] = tileID;
             }
         }
+
+        int bayX = ((int) (Math.random() * (rows - 6))) + 3;
+        int capeX = ((int) (Math.random() * (rows - 4))) + 2;
+
+        while(((capeX-bayX)>(0-4))&&((capeX-bayX)<4)){
+            capeX = ((int) (Math.random() * (rows - 6))) + 3;
+        }
+
+        changePolar(true, 3, 4, 66, 33);
+        changePolar(true, 2, 1, 66, 33);
+        changePolar(false, 2, 2, 50, 50);
+
+        changeAdjacent(capeX, 3, -1, 1, 100, 0);
+        changeAdjacent(bayX,4, 3, 1, 100, 0);
+
+        randomize(-1, 50);
     }
 
     private void generateMercurial() {
@@ -92,16 +113,20 @@ public class Map {
 
     private void generateJovian() {
         System.out.println("generateJovian was called");
-        numOrbits = 2;                  //can randomly choose 1 or 2 orbits
-        mapType = 5;
+        numOrbits = 2;
+        mapType = 0;           //should be 0, must fix js too tho
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int tileTypeID = (int) ((Math.random() * 2.1) + 13); //picks a random tile from 0 to 14
+                int tileTypeID = 0;
+                if(isProb(100)){
+                    tileTypeID = 99;
+                } else {
+                    tileTypeID = 1000;
+                }
                 int tileID = tileTypeID + (mapType * 100);
                 map[r][c] = tileID;
             }
         }
-
     }
 
     private void generateNeptunian() {
@@ -112,6 +137,190 @@ public class Map {
     private void generatePlutonian() {
         System.out.println("generatePlutonian was called");
 
+    }
+
+    private void changeAdjacent(int x, int y, int type, int r, int p, int pFade) {   //changes (x,y) and all tile surrounding for r steps. p is probability out of 100, and p fade is how much to add each step inwards (probability becomes 100% as you go in)
+        int e = (x % 2);
+        if(r >= 3){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x][y+3] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x][y-3] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+1][y+2+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-1][y+2+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+1][y-3+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-1][y-3+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+2][y+2] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-2][y-2] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+2][y-2] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-2][y+2] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+3][y-2+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+3][y-1+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+3][y+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x+3][y+1+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-3][y-2+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-3][y-1+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-3][y+e] = type;
+            }
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y))){
+                map[x-3][y+1+e] = type;
+            }
+
+        }
+        if(r >= 2){
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x+2,y+1))){
+                map[x+2][y+1] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x+2,y))){
+                map[x+2][y] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x+2,y-1))){
+                map[x+2][y-1] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x-2,y+1))){
+                map[x-2][y+1] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x-2,y))){
+                map[x-2][y] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x-2,y-1))){
+                map[x-2][y-1] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x,y+2))){
+                map[x][y+2] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x,y-2))){
+                map[x][y-2] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x+1,y+1+e))){
+                map[x+1][y+1+e] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x-1,y+1+e))){
+                map[x-1][y+1+e] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x+1,y-2+e))){
+                map[x+1][y-2+e] = type;
+            }
+            if((isProb(p + ((r-2) * pFade)))&&(isIn(x+1,y-2+e))){
+                map[x-1][y-2+e] = type;
+            }
+        }
+        if(r >= 1){
+            if((isProb(p + ((r-1) * pFade)))&&(isIn(x+1,y))){
+                map[x+1][y] = type;
+            }
+            if((isProb(p + ((r-1) * pFade)))&&(isIn(x-1,y))){
+                map[x-1][y] = type;
+            }
+            if((isProb(p + ((r-1) * pFade)))&&(isIn(x,y+1))){
+                map[x][y+1] = type;
+            }
+            if((isProb(p + ((r-1) * pFade)))&&(isIn(x,y-1))){
+                map[x][y-1] = type;
+            }
+            if((isProb(p + ((r-1) * pFade)))&&(isIn(x+1,y-1+(2*e)))){
+                map[x+1][y-1+(2*e)] = type;
+            }
+            if((isProb(p + ((r-1) * pFade)))&&(isIn(x-1,y-1+(2*e)))){
+                map[x-1][y-1+(2*e)] = type;
+            }
+        }
+        if((isProb(p + (r * pFade)))&&(isIn(x,y))){
+            map[x][y] = type;
+        }
+    }
+
+    private void changePolar(boolean north, int type, int r, int p, int pFade) {
+        if(north){
+            r--;
+            while(r >= 0){
+                for(int i = 0; i < rows; i++){
+                    if((isProb(p))&&(isIn(i,r))){
+                        map[i][r] = type;
+                    }
+                }
+                p = p+pFade;
+                r--;
+            }
+        } else {
+            r = cols - r;
+            while(r < cols){
+                for(int i = 0; i < rows; i++){
+                    if((isProb(p))&&(isIn(i,r))){
+                        map[i][r] = type;
+                    }
+                }
+                p = p+pFade;
+                r++;
+            }
+
+        }
+    }
+
+    private void removeClumps(){        //should read through each tile on board and remove clumped tiles
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(isIn(i,j)){
+
+                }
+            }
+        }
+    }
+
+    private void randomize(int t, int p){
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if(map[r][c] == t){
+                    int tileTypeID = 0;
+                    if(isProb(p)){
+                        tileTypeID = 0;
+                    } else {
+                        tileTypeID = 1;
+                    }
+                    int tileID = tileTypeID + (mapType * 100);
+                    map[r][c] = tileID;
+                }
+            }
+        }
+    }
+
+    private boolean isIn(int x, int y){
+        return ((x>=0)&&(y>=0)&&(x<rows)&&(y<cols));
+    }
+
+    private boolean isProb(int p){          //input is an int on a scale of 0 to 100 - 0 never called, 100 always called
+        return (p > ((int) (Math.random() * 100)));
     }
 }
 /*
