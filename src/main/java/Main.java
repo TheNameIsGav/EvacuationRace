@@ -22,6 +22,9 @@ public class Main {
         chat.add(totalMessage);
     }
 
+    //TO be added to the chat handling method
+    private static ArrayList getChat(){ return chat;}
+
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
@@ -33,6 +36,11 @@ public class Main {
             adder(user, message);
             System.out.println(chat.get(chat.size() -1));
             return "";
+        });
+
+        Spark.get("/chat/createMessage", (req, res) -> {
+                logger.info("GET request to /chat/createMessage");
+                return getChat();
         });
 
         post("/trade/createRequest", (request, response) -> {
