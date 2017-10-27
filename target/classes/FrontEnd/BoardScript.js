@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", initializer());
 var board;      //This will be the main board.
 
 var Board = function (blueprint) {      //This is the board object.
-    this.rows = blueprint.rows;
-    this.cols = blueprint.cols;
-    this.typeMap = blueprint.map;
+    this.rows = blueprint.cols;
+    this.cols = blueprint.rows;         //ok I've chased the rows/cols flip this far.
+    this.typeMap = blueprint.map;       //someone else can finish it.
     this.hexes = [];
 }
 

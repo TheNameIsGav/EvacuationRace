@@ -67,8 +67,8 @@ function getMapBlueprint() {    //gets blueprint and sets up planetary system ma
 }
 
 var Board = function (blueprint) {
-    this.rows = blueprint.rows;
-    this.cols = blueprint.cols;
+    this.rows = blueprint.cols;
+    this.cols = blueprint.rows;
     this.typeMap = blueprint.map;
     this.hexes = [];
 }

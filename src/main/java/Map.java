@@ -1,11 +1,9 @@
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Map {
-    private int rows;
     private int cols;
+    private int rows;
     private int mapType;
     private int subType;
     private int numOrbits;
@@ -14,11 +12,11 @@ public class Map {
 
     public Map(int rs, int cs, int mType, int sType) {
         logger = LoggerFactory.getLogger(Map.class);
-        rows = rs;
         cols = cs;
+        rows = rs;
         mapType = mType;
         subType = sType;
-        map = new int[rows][cols];
+        map = new int[cols][rows];
 
         if(mType == 0) {        //earth-like planet
             if(sType == 0){
@@ -55,29 +53,29 @@ public class Map {
         return map;
     }
 
-    public int getRows() {
-        return this.rows;
-    }
-
     public int getCols() {
         return this.cols;
+    }
+
+    public int getRows() {
+        return this.rows;
     }
 
     private void generateTerran0() {
         System.out.println("generateTerran0 was called");
         numOrbits = 2;
         mapType = 0;           //should be 0, must fix js too tho
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < cols; r++) {
+            for (int c = 0; c < rows; c++) {
                 map[r][c] = -1;
             }
         }
 
-        int bayX = ((int) (Math.random() * (rows - 6))) + 3;
-        int capeX = ((int) (Math.random() * (rows - 4))) + 2;
+        int bayX = ((int) (Math.random() * (cols - 6))) + 3;
+        int capeX = ((int) (Math.random() * (cols - 4))) + 2;
 
         while(((capeX-bayX)>(0-4))&&((capeX-bayX)<4)){          //can cause an infinite loop if there is no valid col
-            capeX = ((int) (Math.random() * (rows - 6))) + 3;
+            capeX = ((int) (Math.random() * (cols - 6))) + 3;
         }
 
         changePolar(true, 3, 4, 67, 33);
@@ -94,8 +92,8 @@ public class Map {
         System.out.println("generateTerran1 was called");
         numOrbits = 2;
         mapType = 0;           //should be 0, must fix js too tho
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < cols; r++) {
+            for (int c = 0; c < rows; c++) {
                 map[r][c] = -1;
             }
         }
@@ -103,9 +101,8 @@ public class Map {
         changePolar(true, 2, 2, 50, 50);
         changePolar(false, 2, 2, 50, 50);
 
-//        changeAdjacent((rows/2),(cols/2), 3, 3, 25, 25);
+//        changeAdjacent((cols/2),(rows/2), 3, 3, 25, 25);
         changeAdjacent(5,5,3,1,100,0);
-        System.out.println(numBordering(6,4,3));
 
         randomize(-1, 66, 0,1);  //sets iron and organic tiles up
         removeClumps(0,1);
@@ -136,8 +133,8 @@ public class Map {
         System.out.println("generateJovian was called");
         numOrbits = 2;
         mapType = 0;
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < cols; r++) {
+            for (int c = 0; c < rows; c++) {
                 int tileTypeID = 0;
                 if(isProb(100)){
                     tileTypeID = 99;
@@ -286,7 +283,7 @@ public class Map {
         if(north){
             r--;
             while(r >= 0){
-                for(int i = 0; i < rows; i++){
+                for(int i = 0; i < cols; i++){
                     if((isProb(p))&&(isIn(i,r))){
                         map[i][r] = type;
                     }
@@ -295,9 +292,9 @@ public class Map {
                 r--;
             }
         } else {
-            r = cols - r;
-            while(r < cols){
-                for(int i = 0; i < rows; i++){
+            r = rows - r;
+            while(r < rows){
+                for(int i = 0; i < cols; i++){
                     if((isProb(p))&&(isIn(i,r))){
                         map[i][r] = type;
                     }
@@ -310,8 +307,8 @@ public class Map {
     }
 
     private void removeClumps(int c1, int c2){        //reads through each c1 and c2 tile on board and remove clumped tiles, switching between c1 and c2
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
+        for(int i = 0; i < cols; i++){
+            for(int j = 0; j < rows; j++){
                 int type = map[i][j];
                 if(isIn(i,j)&&(numBordering(i,j,type) >= 4)){
                     if(type == c1){
@@ -323,7 +320,7 @@ public class Map {
                 }
             }
         }
-    }
+    }               //note: the above method doesn't eliminate clumps because it generates them as fast as it removes them. It does shuffle the map though, which isn't bad
 
 //    private void addUnique(int t, int repl, int n){
 //
@@ -331,8 +328,8 @@ public class Map {
 //    }
 
     private void randomize(int t, int p, int c1, int c2){  //searches for tiles of type t and randomizes them between c1 and c2 according to p (probability of c1)
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < cols; r++) {
+            for (int c = 0; c < rows; c++) {
                 if((map[r][c] % 100) == t){
                     int tileTypeID;
                     if(isProb(p)){
@@ -374,7 +371,7 @@ public class Map {
     }
 
     private boolean isIn(int x, int y){     //checks to see if tile at x,y is in map.
-        return ((x>=0)&&(y>=0)&&(x<rows)&&(y<cols));
+        return ((x>=0)&&(y>=0)&&(x< cols)&&(y< rows));
     }
 
     private boolean isProb(int p){          //input is an int on a scale of 0 to 100 - 0 never called, 100 always called
@@ -410,9 +407,9 @@ public class Map {
     public void generateInlandOceans() {
         int row = 0;
         int col = 0;
-        while (row > rows - 2 || row < 2|| col > cols - 2 || col < 2) {
-            row = (int) (Math.random() * rows);
-            col = (int) (Math.random() * cols);
+        while (row > cols - 2 || row < 2|| col > rows - 2 || col < 2) {
+            row = (int) (Math.random() * cols);
+            col = (int) (Math.random() * rows);
         }
         map[row][col] = 3;
         if (Math.random() <= .8) {
@@ -438,7 +435,7 @@ public class Map {
         }
 
         for (int i = 0; i < 5; i++) {
-            map[(int) (Math.random() * rows)][(int) (Math.random() * cols)] = 3;
+            map[(int) (Math.random() * cols)][(int) (Math.random() * rows)] = 3;
         }
     }
 
@@ -448,7 +445,7 @@ public class Map {
 
     public void generatePeninsulas() {
         for (int i = 0; i < 2; i++) {
-            int r = (int) (Math.random() * rows);
+            int r = (int) (Math.random() * cols);
             int c = 3;
             int[] tiles = {0, 1};
             map[r][c] = randomTile(tiles);
@@ -456,16 +453,16 @@ public class Map {
                 if (r - 1 >= 0) {
                     map[r - 1][c] = randomTile(tiles);
                 }
-                if (r + 1 < rows) {
+                if (r + 1 < cols) {
                     map[r + 1][c] = randomTile(tiles);
                 }
                 if (c - 1 >= 0) {
                     map[r][c - 1] = randomTile(tiles);
                 }
-                if (c + 1 < cols) {
+                if (c + 1 < rows) {
                     map[r][c + 1] = randomTile(tiles);
                 }
-                if (r + 1 < rows && c - 1 >= 0) {
+                if (r + 1 < cols && c - 1 >= 0) {
                     map[r + 1][c - 1] = randomTile(tiles);
                 }
                 if (r - 1 >= 0 && c - 1 >= 0) {
@@ -475,19 +472,19 @@ public class Map {
                 if (r - 1 >= 0) {
                     map[r - 1][c] = randomTile(tiles);
                 }
-                if (r + 1 < rows) {
+                if (r + 1 < cols) {
                     map[r + 1][c] = randomTile(tiles);
                 }
                 if (c - 1 >= 0) {
                     map[r][c - 1] = randomTile(tiles);
                 }
-                if (c + 1 < cols) {
+                if (c + 1 < rows) {
                     map[r][c + 1] = randomTile(tiles);
                 }
-                if (r + 1 < rows && c + 1 < cols) {
+                if (r + 1 < cols && c + 1 < rows) {
                     map[r + 1][c + 1] = randomTile(tiles);
                 }
-                if (r - 1 >= 0 && c + 1 < cols) {
+                if (r - 1 >= 0 && c + 1 < rows) {
                     map[r - 1][c + 1] = randomTile(tiles);
                 }
             }
@@ -495,7 +492,7 @@ public class Map {
     }
 
     public void generateIceWaterPoles() {
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < cols; i++) {
             for (int j = 0; j < 2; j++) {
                 map[i][j] = 2; //ice
                 if (Math.random() <= .2) {
@@ -505,7 +502,7 @@ public class Map {
             for (int j = 1; j < 4; j++) {
                 map[i][j] = 3;
             }
-            for (int j = cols - 1; j < cols; j++) {
+            for (int j = rows - 1; j < rows; j++) {
                 map[i][j] = 2;
                 double resource = Math.random();
                 if (resource <= .2) {
@@ -520,29 +517,29 @@ public class Map {
     public void generateDoubleHexes() {
         int[] types = {4, 5, 6};
         for (int i = 0; i < (int)(Math.random() * 2) + 2; i++) {
-            int row = (int) (Math.random() * rows);
-            int col = (int) (Math.random() * cols);
-            while (map[row][col] != 0 || (row > rows - 2 || row < 2|| col > cols - 2 || col < 2) || adjacentTypes(row, col, types)) {
-                row = (int) (Math.random() * rows);
-                col = (int) (Math.random() * cols);
+            int row = (int) (Math.random() * cols);
+            int col = (int) (Math.random() * rows);
+            while (map[row][col] != 0 || (row > cols - 2 || row < 2|| col > rows - 2 || col < 2) || adjacentTypes(row, col, types)) {
+                row = (int) (Math.random() * cols);
+                col = (int) (Math.random() * rows);
             }
             map[row][col] = 4; //double metal
         }
         for (int i = 0; i < (int) (Math.random() * 2) + 2; i++) {
-            int row = (int) (Math.random() * rows);
-            int col = (int) (Math.random() * cols);
+            int row = (int) (Math.random() * cols);
+            int col = (int) (Math.random() * rows);
             while ((map[row][col] != 2 && map[row][col] != 0) || adjacentTypes(row, col, types)) {
-                row = (int) (Math.random() * rows);
-                col = (int) (Math.random() * cols);
+                row = (int) (Math.random() * cols);
+                col = (int) (Math.random() * rows);
             }
             map[row][col] = 5; //ice metal
         }
         for (int i = 0; i < (int) (Math.random() * 2) + 3; i++) {
-            int row = (int) (Math.random() * rows);
-            int col = (int) (Math.random() * cols);
+            int row = (int) (Math.random() * cols);
+            int col = (int) (Math.random() * rows);
             while (map[row][col] != 2 || adjacentTypes(row, col, types)) {
-                row = (int) (Math.random() * rows);
-                col = (int) (Math.random() * cols);
+                row = (int) (Math.random() * cols);
+                col = (int) (Math.random() * rows);
             }
             map[row][col] = 6; //ice ice
         }
@@ -568,7 +565,7 @@ public class Map {
             } else {
                 tiles[0] = -1;
             }
-            if (r + 1 < rows) {
+            if (r + 1 < cols) {
                 tiles[1] = map[r + 1][c];
             } else {
                 tiles[1] = -1;
@@ -578,12 +575,12 @@ public class Map {
             } else {
                 tiles[2] = -1;
             }
-            if (c + 1 < cols) {
+            if (c + 1 < rows) {
                 tiles[3] = map[r][c + 1];
             } else {
                 tiles[3] = -1;
             }
-            if (r + 1 < rows && c - 1 >= 0) {
+            if (r + 1 < cols && c - 1 >= 0) {
                 tiles[4] = map[r + 1][c - 1];
             } else {
                 tiles[4] = -1;
@@ -600,7 +597,7 @@ public class Map {
             } else {
                 tiles[0] = -1;
             }
-            if (r + 1 < rows) {
+            if (r + 1 < cols) {
                 tiles[1] = map[r + 1][c];
             } else {
                 tiles[1] = -1;
@@ -610,17 +607,17 @@ public class Map {
             } else {
                 tiles[2] = -1;
             }
-            if (c + 1 < cols) {
+            if (c + 1 < rows) {
                 tiles[3] = map[r][c + 1];
             } else {
                 tiles[3] = -1;
             }
-            if (r + 1 < rows && c + 1 < cols) {
+            if (r + 1 < cols && c + 1 < rows) {
                 tiles[4] = map[r + 1][c + 1];
             } else {
                 tiles[4] = -1;
             }
-            if (r - 1 >= 0 && c + 1 < cols) {
+            if (r - 1 >= 0 && c + 1 < rows) {
                 tiles[5] = map[r - 1][c + 1];
             } else {
                 tiles[5] = -1;
@@ -641,8 +638,8 @@ public class Map {
     }
 
     public void removeClumps() { //if a group of 7 tiles is all the same type, it changes the center tile
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
                 if (allAdjacentSameTypes(i, j) && !(map[i][j] == 3)) {
                     map[i][j] = (int) (Math.random() * 4);
                     j--;
