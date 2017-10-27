@@ -69,14 +69,7 @@ public class Map {
         mapType = 0;           //should be 0, must fix js too tho
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int tileTypeID = 0;
-                if (isProb(50)) {
-                    tileTypeID = 0;
-                } else {
-                    tileTypeID = 1;
-                }
-                int tileID = tileTypeID + (mapType * 100);
-                map[r][c] = tileID;
+                map[r][c] = -1;
             }
         }
 
@@ -87,14 +80,14 @@ public class Map {
             capeX = ((int) (Math.random() * (rows - 6))) + 3;
         }
 
-        changePolar(true, 3, 4, 66, 33);
-        changePolar(true, 2, 1, 66, 33);
+        changePolar(true, 3, 4, 67, 33);
+        changePolar(true, 2, 1, 67, 33);
         changePolar(false, 2, 2, 50, 50);
 
         changeAdjacent(capeX, 3, -1, 1, 100, 0);
         changeAdjacent(bayX,4, 3, 1, 100, 0);
 
-        randomize(-1, 90, 0,1);  //sets iron and organic tiles up
+        randomize(-1, 40 + (int)(Math.random() * 31), 0,1);  //sets iron and organic tiles up with slight variation in occurance
     }
 
     private void generateTerran1() {
