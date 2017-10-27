@@ -10,18 +10,31 @@ public class Map {
     private int[][] map;
     private Logger logger;
 
-    public Map(int rs, int cs, int mType, int sType) {
+    public Map(int mType, int sType) {
         logger = LoggerFactory.getLogger(Map.class);
-        cols = cs;
-        rows = rs;
         mapType = mType;
         subType = sType;
-        map = new int[cols][rows];
 
-        if(mType == 0) {        //earth-like planet
+        if(mType == -1) {                //test case
+            cols = 16;
+            rows = 12;
+            map = new int[cols][rows];
+
+            generateTest();
+        } else if(mType == 0) {        //earth-like planet
             if(sType == 0){
+                cols = 16;
+                rows = 12;
+                map = new int[cols][rows];
+
                 generateTerran0();
             } else if(sType == 1){
+                int factor = (int) (Math.random() * 3);
+
+                cols = 14 + factor;
+                rows = 10 + factor;
+                map = new int[cols][rows];
+
                 generateTerran1();
             }
         } else if(mType == 1) {     //mercury-like planet
@@ -38,7 +51,11 @@ public class Map {
             generateNeptunian();
         } else if(mType == 7) {     //pluto-like planet
             generatePlutonian();
-        } else {
+        } else {                    //default
+            cols = 16;
+            rows = 12;
+            map = new int[cols][rows];
+
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
                     map[i][j] = (int) (Math.random() * 2);//metal = 0. organics = 1, ice = 2, ocean = 3, double metal = 4, ice metal = 5, double ice = 6
@@ -61,6 +78,19 @@ public class Map {
         return this.rows;
     }
 
+    private void generateTest() {
+        System.out.println("generateTest was called");
+        numOrbits = 2;
+        mapType = -1;
+        for (int r = 0; r < cols; r++) {
+            for (int c = 0; c < rows; c++) {
+                map[r][c] = 0;
+            }
+        }
+
+        changeAdjacent(cols/2, rows/2, 3, 3, 100, 0);
+    }
+
     private void generateTerran0() {
         System.out.println("generateTerran0 was called");
         numOrbits = 2;
@@ -72,20 +102,27 @@ public class Map {
         }
 
         int bayX = ((int) (Math.random() * (cols - 6))) + 3;
-        int capeX = ((int) (Math.random() * (cols - 4))) + 2;
+        int capeX = ((int) (Math.random() * (cols - 6))) + 3;
+        int lakeX = ((int) (Math.random() * (cols - 6))) + 3;   //may be defunct, see below
 
         while(((capeX-bayX)>(0-4))&&((capeX-bayX)<4)){          //can cause an infinite loop if there is no valid col
             capeX = ((int) (Math.random() * (cols - 6))) + 3;
         }
 
         changePolar(true, 3, 4, 67, 33);
-        changePolar(true, 2, 1, 67, 33);
-        changePolar(false, 2, 2, 50, 50);
+
+        int lake1X = cols-1;    //lakes currently generated on the side of maps, needs to be fixed
+        int lake2X = 0;
 
         changeAdjacent(capeX, 3, -1, 1, 100, 0);
-        changeAdjacent(bayX,4, 3, 1, 100, 0);
+        changeAdjacent(bayX,4, 3, 2, 25, 75);
+        changeAdjacent(lake1X, rows-4, 3,2,50, 25);
+        changeAdjacent(lake2X, rows-3, 3,1,75, 25);
 
         randomize(-1, 40 + (int)(Math.random() * 31), 0,1);  //sets iron and organic tiles up with slight variation in occurance
+
+        changePolar(true, 2, 1, 67, 33);
+        changePolar(false, 2, 2, 50, 50);
     }
 
     private void generateTerran1() {
@@ -101,8 +138,8 @@ public class Map {
         changePolar(true, 2, 2, 50, 50);
         changePolar(false, 2, 2, 50, 50);
 
-//        changeAdjacent((cols/2),(rows/2), 3, 3, 25, 25);
-        changeAdjacent(5,5,3,1,100,0);
+        changeAdjacent((cols/2)+2,(rows/2), 3, 3, 25, 25);
+        changeAdjacent((cols/2)-2,(rows/2),3,3,25,25);
 
         randomize(-1, 66, 0,1);  //sets iron and organic tiles up
         removeClumps(0,1);
@@ -160,7 +197,7 @@ public class Map {
     private void changeAdjacent(int x, int y, int type, int r, int p, int pFade) {   //changes (x,y) and all tile surrounding for r steps. p is probability out of 100, and p fade is how much to add each step inwards (probability becomes 100% as you go in)
         int e = (x % 2);
         if(r >= 3){                                                 //third ring
-            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y+3))){
+            if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y+3))){   //add %rows to x coord and isIn
                 map[x][y+3] = type;
             }
             if((isProb(p + ((r-3) * pFade)))&&(isIn(x,y-3))){
