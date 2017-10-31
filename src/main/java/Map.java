@@ -29,16 +29,26 @@ public class Map {
 
                 generateTerran0();
             } else if(sType == 1){
-                int factor = (int) (Math.random() * 3);
-
-                cols = 14 + factor;
-                rows = 10 + factor;
+                cols = 16;
+                rows = 12;
                 map = new int[cols][rows];
 
                 generateTerran1();
             }
         } else if(mType == 1) {     //mercury-like planet
-            generateMercurial();
+            if(sType == 0){
+                cols = 10;
+                rows = 8;
+                map = new int[cols][rows];
+
+                generateMercurial0();
+            } else if(sType == 1){
+                cols = 8;
+                rows = 6;
+                map = new int[cols][rows];
+
+                generateMercurial1();
+            }
         } else if(mType == 2) {     //mars-like planet
             generateMartian();
         } else if(mType == 3) {     //venus-like planet
@@ -111,24 +121,32 @@ public class Map {
 
         changePolar(true, 3, 4, 67, 33);
 
-        int lake1X = cols-1;    //lakes currently generated on the side of maps, needs to be fixed
-        int lake2X = 0;
+        int lake1X = cols-1-((int) (Math.random() * ((cols)-6)))-3;    //lakes currently generated on the side of maps, needs to be fixed
+        int lake2X = ((int) (Math.random() * ((cols)-4)))+2;
+
+        while(((lake1X-lake2X)>(0-3))&&((lake1X-lake2X)<3)){          //can cause an infinite loop if there is no valid col
+            lake2X = ((int) (Math.random() * ((cols)-4)))+2;
+        }
 
         changeAdjacent(capeX, 3, -1, 1, 100, 0);
         changeAdjacent(bayX,4, 3, 2, 25, 75);
-        changeAdjacent(lake1X, rows-4, 3,2,50, 25);
+        changeAdjacent(lake1X, rows-3, 3,2,60, 20);
         changeAdjacent(lake2X, rows-3, 3,1,75, 25);
 
-        randomize(-1, 40 + (int)(Math.random() * 31), 0,1);  //sets iron and organic tiles up with slight variation in occurance
+        randomize(-1, 45 + (int)(Math.random() * 16), 0,1);  //sets iron and organic tiles up with slight variation in occurance
+        removeClumps(0,1);
 
         changePolar(true, 2, 1, 67, 33);
         changePolar(false, 2, 2, 50, 50);
+
+        addUnique(4, 0, (int) (Math.random() * 2) + 2, 3); //adds iron-iron
+        addUnique(6, 2, (int) (Math.random() * 2) + 2, 3); //adds ice-ice
+        addUnique(5, 2, (int) (Math.random() * 2) + 2, 0); //adds iron-ice
     }
 
     private void generateTerran1() {
         System.out.println("generateTerran1 was called");
         numOrbits = 2;
-        mapType = 0;           //should be 0, must fix js too tho
         for (int r = 0; r < cols; r++) {
             for (int c = 0; c < rows; c++) {
                 map[r][c] = -1;
@@ -141,13 +159,29 @@ public class Map {
         changeAdjacent((cols/2)+2,(rows/2), 3, 3, 25, 25);
         changeAdjacent((cols/2)-2,(rows/2),3,3,25,25);
 
-        randomize(-1, 66, 0,1);  //sets iron and organic tiles up
+        randomize(-1, 45 + (int)(Math.random() * 16), 0,1);  //sets iron and organic tiles up
         removeClumps(0,1);
+
+        addUnique(4, 0, (int) (Math.random() * 2) + 2, 3);
+        addUnique(6, 2, (int) (Math.random() * 2) + 2, 3);
+        addUnique(5, 2, (int) (Math.random() * 2) + 2, 3);
+
     }
 
 
-    private void generateMercurial() {
-        System.out.println("generateMercurial was called");
+    private void generateMercurial0() {
+        System.out.println("generateMercurial0 was called");
+        for (int r = 0; r < cols; r++) {
+            for (int c = 0; c < rows; c++) {
+                map[r][c] = -1;
+            }
+        }
+        randomize(-1, 45 + (int)(Math.random() * 16), 0,1);  //sets iron and organic tiles up
+        addUnique(7,1,3, 0);
+    }
+
+    private void generateMercurial1() {
+        System.out.println("generateMercurial1 was called");
 
     }
 
@@ -169,7 +203,6 @@ public class Map {
     private void generateJovian() {
         System.out.println("generateJovian was called");
         numOrbits = 2;
-        mapType = 0;
         for (int r = 0; r < cols; r++) {
             for (int c = 0; c < rows; c++) {
                 int tileTypeID = 0;
@@ -178,8 +211,7 @@ public class Map {
                 } else {
                     tileTypeID = 1000;
                 }
-                int tileID = tileTypeID + (mapType * 100);
-                map[r][c] = tileID;
+                map[r][c] = tileTypeID;
             }
         }
     }
@@ -359,23 +391,35 @@ public class Map {
         }
     }               //note: the above method doesn't eliminate clumps because it generates them as fast as it removes them. It does shuffle the map though, which isn't bad
 
-//    private void addUnique(int t, int repl, int n){
-//
-//        map[r][c]
-//    }
+                            //(5, 0, 3, 3)
+    private void addUnique(int t, int repl, int n, int nexTo){   //changes n tiles of type repl to type t - higher probability if next to many nexTo
+        System.out.println("addUnique called");
+        while (n > 0){
+            System.out.println(n);
+            int r = (int) (Math.random() * cols);
+            int c = (int) (Math.random() * rows);
 
-    private void randomize(int t, int p, int c1, int c2){  //searches for tiles of type t and randomizes them between c1 and c2 according to p (probability of c1)
+            System.out.println(r + " " + c + " " + map[r][c]);
+
+            if((map[r][c] == repl) && isProb(15*(numBordering(r,c,nexTo))+10) && (numBordering(r,c,t) == 0))
+            {
+                map[r][c] = t;
+                n--;
+            }
+        }
+    }
+
+    private void randomize(int t, int p, int c1, int c2) {  //searches for tiles of type t and randomizes them between c1 and c2 according to p (probability of c1)
         for (int r = 0; r < cols; r++) {
             for (int c = 0; c < rows; c++) {
-                if((map[r][c] % 100) == t){
+                if ((map[r][c] % 100) == t) {
                     int tileTypeID;
-                    if(isProb(p)){
+                    if (isProb(p)) {
                         tileTypeID = c1;
                     } else {
                         tileTypeID = c2;
                     }
-                    int tileID = tileTypeID + (mapType * 100);
-                    map[r][c] = (mapType * 100) + tileID;
+                    map[r][c] = tileTypeID;
                 }
             }
         }
