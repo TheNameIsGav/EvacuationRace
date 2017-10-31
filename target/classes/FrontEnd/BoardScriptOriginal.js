@@ -205,7 +205,7 @@ Board.prototype.drawMap = function () {
                     break;
                 }
                 case 11: {
-                    hexElement.style.fill = "#338099";
+                    hexElement.style.fill = "#ff4000";
                     type = "extremiumHex";
                     break;
                 }
