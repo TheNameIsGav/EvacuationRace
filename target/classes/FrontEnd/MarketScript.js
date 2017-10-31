@@ -11,7 +11,7 @@ function newChatMessage() {
         }
         document.getElementById("chatTextArea").value = "";
         POST(JSON.stringify(message), "/chat/createMessage");
-        console.log(GET("/chat/createMessage", "messages") + " help");
+        GET("/chat/createMessage", "messages");
     }
 }
 

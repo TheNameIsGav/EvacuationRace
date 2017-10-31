@@ -1,9 +1,5 @@
-var userpassword;
-var username;
-var loginForm = document.getElementByID("loginForm");
+var skrt;
 
-loginForm.addEventListener("onClick", function () {
-    userpassword = document.getElementByID("password");
-    username = document.getElementByID("username");
+document.addEventListener("DOMContentLoaded", function () {
+    skrt = document.getElementByID("");
 });
-

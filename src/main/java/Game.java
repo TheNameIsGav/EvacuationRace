@@ -19,10 +19,10 @@ public class Game {
         if((mapTypeGenerator >= 0)&&(mapTypeGenerator <= 99))       //the 'normal' solar system
         {
             maps = new Map[8];
-            maps[0] = new Map(10, 14, 0);
+            maps[0] = new Map(0, 0);
         } else {                                                //must have else to initialize maps
             maps = new Map[1];
-            maps[0] = new Map(10, 14, 0);
+            maps[0] = new Map(0, 0);
         }
 
         mapList = maps;
