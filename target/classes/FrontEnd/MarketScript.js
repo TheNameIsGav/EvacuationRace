@@ -11,7 +11,23 @@ function newChatMessage() {
         }
         document.getElementById("chatTextArea").value = "";
         POST(JSON.stringify(message), "/chat/createMessage");
-        GET("/chat/createMessage", "messages");
+        var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:4567/chat/createMessage", true);    //asks for the map
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log("createChatMessage called and executed.")
+                        console.log(xhr.responseText);
+                        return JSON.parse(xhr.responseText);     //returns a new board parsed from the blueprints
+                    } else {
+                        console.error(xhr.status);
+                    }
+                }
+            };
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
     }
 }
 
@@ -26,7 +42,9 @@ function POST(string, destination) {
 function GET(destination, elementID){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:4567" + destination, true);
-    return "";
+    xhr.send(null);
+    console.log(xhr.response);
+    return xhr.response;
 }
 
 var tradeDropdownNL = document.getElementsByClassName("tradeDropdown");

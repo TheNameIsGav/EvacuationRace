@@ -14,12 +14,22 @@ import static spark.route.HttpMethod.get;
 public class Main {
     public static Map m; //declared outside to be global?
 
-    private static ArrayList chat = new ArrayList();
+    private static ArrayList<String> chat = new ArrayList();
     private static ArrayList tradeRequest = new ArrayList();
 
     private static void adder(String user, String message) { //Method with User ID and Name
+        //chat.set(0, "Begin Messages");
         String totalMessage = user + ": " + message;
         chat.add(totalMessage);
+    }
+
+    public static String printValue(ArrayList a){
+        String  ret = "";
+        for(int i = 0; i < chat.size(); i++)
+        {
+            ret = ret + chat.get(i) + " ";
+        }
+        return ret;
     }
 
     public static void main(String[] args) {
@@ -31,9 +41,15 @@ public class Main {
             String user = parts[3];
             String message = parts[7];
             adder(user, message);
-            System.out.println(chat.get(chat.size() -1));
             return "";
         });
+
+        Spark.get("/chat/createMessage", (req, res) -> {
+            logger.info("GET request to /chat/createMessage");
+            res.body(printValue(chat));
+            return printValue(chat);
+        });
+
 
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());
