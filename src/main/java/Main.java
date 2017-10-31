@@ -3,7 +3,6 @@ import org.slf4j.LoggerFactory;
 
 import spark.Spark;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 
 import static spark.Spark.*;
@@ -46,10 +45,15 @@ public class Main {
         //    if(m == null) { //if map has not been initialized, this initializes the map
                 m = new Map(0, 0); //map initialized here if not initialized previously
         //    }
-            map = m.getMap();
-            for (int[] i : map) {  //prints out the map array no matter what
-                System.out.println(Arrays.toString(i));
+            map = m.getMainMap();
+
+            for (int i = 0; i < map[0].length; i++) {   //prints out map values
+                for (int j = 0; j < map.length; j++) {
+                    System.out.print(map[j][i] + "\t");
+                }
+                System.out.println("");
             }
+
             return m;
         }, new JsonUtil());
     }
