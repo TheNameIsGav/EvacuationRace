@@ -3,7 +3,6 @@ import org.slf4j.LoggerFactory;
 
 import spark.Spark;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 
 import static spark.Spark.*;
@@ -14,22 +13,12 @@ import static spark.route.HttpMethod.get;
 public class Main {
     public static Map m; //declared outside to be global?
 
-    private static ArrayList<String> chat = new ArrayList();
+    private static ArrayList chat = new ArrayList();
     private static ArrayList tradeRequest = new ArrayList();
 
     private static void adder(String user, String message) { //Method with User ID and Name
-        //chat.set(0, "Begin Messages");
-        String totalMessage = user + ": " + message;
+        String totalMessage = user + " " + message;
         chat.add(totalMessage);
-    }
-
-    public static String printValue(ArrayList a){
-        String  ret = "";
-        for(int i = 0; i < chat.size(); i++)
-        {
-            ret = ret + chat.get(i) + " ";
-        }
-        return ret;
     }
 
     public static void main(String[] args) {
@@ -37,19 +26,15 @@ public class Main {
         Spark.staticFileLocation("/FrontEnd");
 
         post("/chat/createMessage", (request, response) -> {
+            logger.info("GET request to /chat/createMessage");
             String[] parts = request.body().split("\"");
             String user = parts[3];
             String message = parts[7];
             adder(user, message);
-            return "";
+            System.out.println(chat.get(chat.size() -1));
+            String convertedString = chat.toString();
+            return convertedString;
         });
-
-        Spark.get("/chat/createMessage", (req, res) -> {
-            logger.info("GET request to /chat/createMessage");
-            res.body(printValue(chat));
-            return printValue(chat);
-        });
-
 
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());
@@ -60,12 +45,17 @@ public class Main {
             logger.info("GET request to /map/getBoard");
             int[][] map;
         //    if(m == null) { //if map has not been initialized, this initializes the map
-                m = new Map(-1, 0); //map initialized here if not initialized previously
+                m = new Map(0, 0); //map initialized here if not initialized previously
         //    }
-            map = m.getMap();
-            for (int[] i : map) {  //prints out the map array no matter what
-                System.out.println(Arrays.toString(i));
+            map = m.getMainMap();
+
+            for (int i = 0; i < map[0].length; i++) {   //prints out map values
+                for (int j = 0; j < map.length; j++) {
+                    System.out.print(map[j][i] + "\t");
+                }
+                System.out.println("");
             }
+
             return m;
         }, new JsonUtil());
     }
