@@ -11,17 +11,18 @@ function newChatMessage() {
         }
         document.getElementById("chatTextArea").value = "";
 
-           message = JSON.stringify(message);
-
+            message = JSON.stringify(message);
+            var parser = "";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "http://localhost:4567/chat/createMessage", true);
             xhr.onload = function (e) {
                 if (xhr.readyState === 4) {
 
                     if (xhr.status === 200) {
-                             console.log("reached output");
-                             console.log(JSON.parse(xhr.responseText));
-                             document.getElementById("messages").innerHTML(JSON.parse(xhr.responseText));
+                             parser = xhr.responseText;
+                             var temp = chatManipulation(parser);
+                             console.log(temp);
+                             document.getElementById("messages").innerHTML = temp;
                     } else {
 
                         console.error(xhr.status);
@@ -36,6 +37,20 @@ function newChatMessage() {
     }
 }
 
+function chatManipulation (chat) {
+    var finalStr = "";
+    chat = chat.substring(1).slice(0, -1);
+    var splitter = chat.split(", ");
+    for(var i = splitter.length; i >= 0; i--)
+    {
+        splitter[i] = splitter[i] + "<br> \n";
+    }
+    for(var j = 0; j < splitter.length-1; j++)
+    {
+        finalStr = finalStr + splitter[j];
+    }
+    return finalStr;
+}
 
 function POST(string, destination) {
     var xhr = new XMLHttpRequest();
