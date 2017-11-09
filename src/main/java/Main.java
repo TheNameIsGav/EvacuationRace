@@ -13,7 +13,6 @@ import static spark.route.HttpMethod.get;
 public class Main {
     public static Map m; //declared outside to be global?
 
-    private static User current = new User();
     private static ArrayList chat = new ArrayList();
 
     private static void adder(String user, String message) { //Method with User ID and Name
@@ -31,7 +30,7 @@ public class Main {
             String user = parts[3];
             String message = parts[7];
             adder(user, message);
-            System.out.println(chat.get(chat.size() -1));
+            System.out.println(chat.get(chat.size() - 1));
             String convertedString = chat.toString();
             return convertedString;
         });
@@ -44,9 +43,9 @@ public class Main {
         Spark.get("/map/getBoard", (req, res) -> {
             logger.info("GET request to /map/getBoard");
             int[][] map;
-        //    if(m == null) { //if map has not been initialized, this initializes the map
-                m = new Map(0, 0); //map initialized here if not initialized previously
-        //    }
+            //    if(m == null) { //if map has not been initialized, this initializes the map
+            m = new Map(0, 0); //map initialized here if not initialized previously
+            //    }
             map = m.getMainMap();
 
             for (int i = 0; i < map[0].length; i++) {   //prints out map values
@@ -61,7 +60,4 @@ public class Main {
     }
 
 
-    public static void login(current){
-
-    }
 }
