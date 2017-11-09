@@ -3,13 +3,19 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+import java.util.*;
+
+
 public class Game {
+    private int numPlayers;
     private String[] players;
     private int typeOfGame;             //0 is normal game, we could have other game types tho.
-    private Map[] mapList;
+    private PlanetarySystem[] planets;
 
     public Game(String[] p, int type)
     {
+        numPlayers = p.length;
         players = p;
         typeOfGame = type;
         Map[] maps;

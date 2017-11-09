@@ -1,6 +1,9 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+import java.util.*;
+
 import spark.Spark;
 
 import java.util.ArrayList;
@@ -8,13 +11,20 @@ import java.util.ArrayList;
 import static spark.Spark.*;
 import static spark.route.HttpMethod.get;
 
-
-
 public class Main {
-    public static Map m; //declared outside to be global?
+
+    private static ArrayList<Player>
+
+    private static ArrayList<Game> gameList = new ArrayList<Game>(0);
+
+    ///////////// clear this away
+
+    private static Map m; //declared outside to be global?
 
     private static ArrayList chat = new ArrayList();
     private static ArrayList tradeRequest = new ArrayList();
+
+    /////////////////////////////
 
     private static void adder(String user, String message) { //Method with User ID and Name
         String totalMessage = user + ": " + message;
@@ -24,6 +34,8 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
+
+        //////////////// get and post handlers below ///////////////////
 
         post("/chat/createMessage", (request, response) -> {
             String[] parts = request.body().split("\"");
@@ -45,7 +57,7 @@ public class Main {
         //    if(m == null) { //if map has not been initialized, this initializes the map
                 m = new Map(0, 0); //map initialized here if not initialized previously
         //    }
-            map = m.getMainMap();
+            map = m.getMap();
 
             for (int i = 0; i < map[0].length; i++) {   //prints out map values
                 for (int j = 0; j < map.length; j++) {
