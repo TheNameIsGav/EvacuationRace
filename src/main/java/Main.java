@@ -6,14 +6,17 @@ import java.util.*;
 
 import spark.Spark;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 
 import static spark.Spark.*;
 import static spark.route.HttpMethod.get;
 
+
+
 public class Main {
 
-    private static ArrayList<Player>
+    private static ArrayList<Player> players;
 
     private static ArrayList<Game> gameList = new ArrayList<Game>(0);
 
