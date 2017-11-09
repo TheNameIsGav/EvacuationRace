@@ -46,7 +46,8 @@ function loadBuildingPhase() {
 }
 
 var board;
-function getMapBlueprint() {
+function getMapBlueprint() {    //gets blueprint and sets up planetary system map
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:4567/map/getBoard", true);
     xhr.onload = function (e) {
@@ -66,9 +67,9 @@ function getMapBlueprint() {
 }
 
 var Board = function (blueprint) {
-    this.rows = blueprint.rows;
-    this.cols = blueprint.cols;
-    this.typeMap = blueprint.map;
+    this.rows = blueprint.cols;
+    this.cols = blueprint.rows;
+    this.typeMap = blueprint.mainMap;
     this.hexes = [];
 }
 
@@ -106,6 +107,15 @@ var Hex = function (row, col, type, id, backgroundHex) {
 
 Board.prototype.drawMap = function () {
     var map = document.getElementById("mapSVG");
+
+    console.log("Cols : " + this.rows + " ; Rows : " + this.cols + " (These values are flipped damn it)");
+
+    var w = (15 * this.rows) + 15; //original = 223
+    var h = (17.4 * this.cols) + 18.7; //original = 191
+
+    console.log("view box set to (0, 0, " + w + ", " + h + ")");
+    map.setAttribute("viewBox","0 0 " + w + " " + h);
+
     var idCounter = 0;
     for (var rows = 0; rows < this.rows; rows++) {
         for (var cols = 0; cols < this.cols; cols++) {
@@ -166,6 +176,62 @@ Board.prototype.drawMap = function () {
                     map.appendChild(backgroundHex);
                     break;
                 }
+                case 7: {
+                    hexElement.style.fill = "#daa520";
+                    type = "rareHex";
+                    break;
+                }
+                case 8: {
+                    hexElement.style.fill = "url(#doubleIce)";
+                    type = "metalRare";
+                    backgroundHex = hexElement.cloneNode(true);
+                    backgroundHex.style.fill = "#DDDDDD";
+                    backgroundHex.id = idCounter;
+                    map.appendChild(backgroundHex);
+                    break;
+                }
+                case 9: {
+                    hexElement.style.fill = "url(#doubleIce)";
+                    type = "IceRare";
+                    backgroundHex = hexElement.cloneNode(true);
+                    backgroundHex.style.fill = "#DDDDDD";
+                    backgroundHex.id = idCounter;
+                    map.appendChild(backgroundHex);
+                    break;
+                }
+                case 10: {
+                    hexElement.style.fill = "#3d8f3d";
+                    type = "weakOrganicsHex";
+                    break;
+                }
+                case 11: {
+                    hexElement.style.fill = "#ff4000";
+                    type = "extremiumHex";
+                    break;
+                }
+                case 12: {
+                    hexElement.style.fill = "#00997a";
+                    type = "uraniumHex";
+                    break;
+                }
+                case 13: {
+                    hexElement.style.fill = "#ffdf80";
+                    type = "hydrogenHex1";
+                    break;
+                }
+                case 14: {
+                    hexElement.style.fill = "#ffd24d";
+                    type = "hydrogenHex2";
+                    break;
+                }
+                case 15: {
+                    hexElement.style.fill = "#ff8000";
+                    type = "deuteriumHex";
+                    break;
+                }
+                default: {
+                    console.log("unrecognised value at (" + rows + "," + cols +") - " + board.typeMap[rows][cols]);
+                }
             }
             var newHex = new Hex(rows, cols, type, idCounter + "H", (backgroundHex.id || -1) + "B");
             this.addHex(newHex);
@@ -173,11 +239,17 @@ Board.prototype.drawMap = function () {
             map.appendChild(hexElement);
         }
     }
+
 }
 
 function drawHex() {
     var hex = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    hex.setAttribute("fill", "#ff0000");
+    hex.setAttribute("fill", "#000000");
+//    var pointArr = [15, 0, 20, 8.7, 15, 17.4, 5, 17.4, 0, 8.7, 5, 0]
+//    for (int i = 0; i < pointArr.length; i++)
+//   {
+//        pointArr[i] *=
+//    }
     hex.setAttribute("points", "15 0 20 8.7 15 17.4 5 17.4 0 8.7 5 0");
     return hex;
 }
@@ -230,8 +302,27 @@ function hoverEnter() {
                 document.getElementById("mapSVG").appendChild(shadow);
                 bool = false;
             }
+            var svg = document.getElementById("mapSVG");
+            var unit = event.target;
+
+            oldPt = svg.createSVGPoint(); //oldPt is the last known location of the mouse
+            oldPt.x = event.clientX;
+            oldPt.y = event.clientY
+
+            var oldSvgPt = oldPt.matrixTransform(svg.getScreenCTM().inverse()); //turn screen coordinates (in px) into SVG coordinates
+            var newPt = svg.createSVGPoint(); //place where unit has just been dragged
+            newPt.x = event.clientX;
+            newPt.y = event.clientY;
+            var newSvgP = newPt.matrixTransform(svg.getScreenCTM().inverse());
+            unit.setAttribute("x", (Number.parseFloat(unit.getAttribute("x")) + newSvgP.x - oldSvgPt.x)); //transform unit in the x direction the difference between old and new points
+            unit.setAttribute("y", Number.parseFloat(unit.getAttribute("y")) + newSvgP.y - oldSvgPt.y); //transform unit in the y direction
+            oldPt.x = event.clientX; //set last known location to current location
+            oldPt.y = event.clientY;
+            /*
             var width = document.getElementById("page").offsetWidth;
             var c = 1 / (width * .92 / 223);
+            //var yScale = 1 / (height * .92 / _);
+            //var xScale = 1 / (width * .92 / _);
             var x = (event.pageX - currentX) * c;
             var y = (event.pageY - currentY) * c;
             translate(x, y, target);
@@ -240,6 +331,7 @@ function hoverEnter() {
             if (currentX > 223 / c || currentY < document.getElementById("page").offsetHeight * .06) {
                 deFocus(event);
             }
+            */
         };
         function deFocusKey() {
             if (event.key === "Escape") {
