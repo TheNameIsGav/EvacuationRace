@@ -34,6 +34,8 @@ public class Main {
         chat.add(totalMessage);
     }
 
+    /////////////////////////////
+
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
@@ -51,6 +53,40 @@ public class Main {
 
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());
+            return "";
+        });
+
+        post("/login", (req, res) -> {
+            String usr = req.queryParams("username");
+            String pwd = req.queryParams("password");
+
+            System.out.println(usr + ", " + pwd);
+
+            boolean valid = false;
+
+            if(usr.equals("username")) {
+                if(pwd.equals("password")) {
+                    valid = true;
+                }
+            }
+
+            if(valid) {
+                res.cookie("HASH", "0");    // places a cookie!
+                res.redirect("/Board.html");    // should eventually be User's page
+            } else {
+                res.redirect("/Login.html");
+            }
+            return "";  // doesn't override the redirect above, but is this necessary/dangerous?
+        });
+
+        post("/signup", (req, res) -> {
+
+            return "";
+        });
+
+        post("/logout", (req, res) -> {
+            res.removeCookie("HASH");
+            res.redirect("/");
             return "";
         });
 
