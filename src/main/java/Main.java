@@ -41,12 +41,14 @@ public class Main {
         //////////////// get and post handlers below ///////////////////
 
         post("/chat/createMessage", (request, response) -> {
+            logger.info("GET request to /chat/createMessage");
             String[] parts = request.body().split("\"");
             String user = parts[3];
             String message = parts[7];
             adder(user, message);
-            System.out.println(chat.get(chat.size() -1));
-            return "";
+            System.out.println(chat.get(chat.size() - 1));
+            String convertedString = chat.toString();
+            return convertedString;
         });
 
         post("/trade/createRequest", (request, response) -> {
