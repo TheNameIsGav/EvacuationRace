@@ -42,8 +42,17 @@ public class Main {
 
         //////////////// get and post handlers below ///////////////////
 
+        Spark.get("/chat/loadChat", (request, response) -> {
+            logger.info("GET request to update chat");
+            return chat.toString();
+        });
+
         post("/chat/createMessage", (request, response) -> {
+<<<<<<< HEAD
             logger.info("GET request to /chat/createMessage");
+=======
+            logger.info("POST request to /chat/createMessage");
+>>>>>>> 695f688378f988d3cb90d34cdb54d3bd8be78bd9
             String[] parts = request.body().split("\"");
             String user = parts[3];
             String message = parts[7];
@@ -52,6 +61,8 @@ public class Main {
             String convertedString = chat.toString();
             return convertedString;
         });
+
+
 
         post("/trade/createRequest", (request, response) -> {
             System.out.println(request.body());

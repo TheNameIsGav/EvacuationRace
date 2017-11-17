@@ -2,6 +2,35 @@ document.getElementById("chatTextArea").addEventListener("keypress", newChatMess
 
 document.getElementById("chatSendButton").addEventListener("click", newChatMessage);
 
+//window.onload = function () {
+//    var interval = setInterval(function(){reloadChat()}, 500)
+//}
+
+function reloadChat(){
+            var parser = "";
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:4567/chat/loadChat", true);
+            xhr.onload = function (f) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                             parser = xhr.responseText;
+                             var temp = chatManipulation(parser);
+                             document.getElementById("messages").innerHTML = temp;
+                    } else {
+
+                        console.error(xhr.status);
+                    }
+                }
+            };
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
+
+}
+
+
+
 function newChatMessage() {
     if (event.type === "click" || (event.type === "keypress" && event.keyCode === 13)) {
         event.preventDefault();
@@ -34,7 +63,25 @@ function newChatMessage() {
             };
             xhr.send(message);
 
+<<<<<<< HEAD
+=======
     }
+}
+
+function chatManipulation (chat) {
+    var finalStr = "";
+    chat = chat.substring(1).slice(0, -1);
+    var splitter = chat.split(", ");
+    for(var i = splitter.length; i >= 0; i--)
+    {
+        splitter[i] = splitter[i] + "<br> \n";
+>>>>>>> 695f688378f988d3cb90d34cdb54d3bd8be78bd9
+    }
+    for(var j = 0; j < splitter.length-1; j++)
+    {
+        finalStr = finalStr + splitter[j];
+    }
+    return finalStr;
 }
 
 function chatManipulation (chat) {

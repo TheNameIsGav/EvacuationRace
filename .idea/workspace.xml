@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ad86c302-d6b3-4b56-9a8e-c3344a5c2baa" name="Default" comment="">
+    <list default="true" id="10b2808f-c955-447d-a800-12401dd9a757" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Main.class" afterPath="$PROJECT_DIR$/target/classes/Main.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Main.java" afterPath="$PROJECT_DIR$/src/main/java/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/FrontEnd/Market.html" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/Market.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/FrontEnd/MarketScript.js" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/MarketScript.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/FrontEnd/Signup.html" afterPath="$PROJECT_DIR$/target/classes/FrontEnd/Signup.html" />
     </list>
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +48,8 @@
       <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="315">
+              <caret line="15" column="38" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -92,15 +90,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/target/classes/FrontEnd/Signup.html" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
@@ -300,13 +292,6 @@
     <option name="remove_strategy" value="false" />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="97c983a3-3f76-4994-8c59-5f97d4289bf0" name="Default" comment="" />
-      <created>1505486474032</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1505486474032</updated>
-    </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -375,9 +360,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <option name="time" value="3" />
@@ -419,11 +401,11 @@
           <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1510868693914" expanded="true" signature="1136:1525" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="1589:1671" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="1712:2421" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="2463:2498" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="2540:2643" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="1136:1525" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="1890:1972" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2013:2722" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2764:2799" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2841:2944" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -441,11 +423,11 @@
           <caret line="21" column="14" lean-forward="false" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1510868693914" expanded="true" signature="1136:1525" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="1589:1671" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="1712:2421" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="2463:2498" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="2540:2643" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="1136:1525" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="1890:1972" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2013:2722" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2764:2799" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2841:2944" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -687,11 +669,11 @@
           <caret line="80" column="29" lean-forward="true" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1510868693914" expanded="true" signature="1136:1525" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="1589:1671" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="1712:2421" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="2463:2498" ph="{...}" />
-            <marker date="1510868693914" expanded="true" signature="2540:2643" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="1136:1525" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="1890:1972" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2013:2722" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2764:2799" ph="{...}" />
+            <marker date="1510938990425" expanded="true" signature="2841:2944" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -794,8 +776,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="315">
+          <caret line="15" column="38" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
