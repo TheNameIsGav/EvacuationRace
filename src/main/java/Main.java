@@ -16,7 +16,7 @@ import static spark.route.HttpMethod.get;
 
 public class Main {
 
-    private static ArrayList<Player> players;
+    private static ArrayList<Player> players = new ArrayList<Player>(0);
 
     private static ArrayList<Game> gameList = new ArrayList<Game>(0);
 
@@ -65,6 +65,24 @@ public class Main {
             return "";
         });
 
+        post("/signup", (req, res) -> {
+            String usr = req.queryParams("username");
+            String pwd = req.queryParams("password");
+
+            System.out.println(usr + ", " + pwd);
+
+            // needs if condition here - should reject weird or existing usernames/passwords
+
+            System.out.println("valid!");
+
+            Player p = new Player(usr, pwd);
+            players.add(p);
+
+            res.cookie("HASH", "0");    // places a cookie!
+            res.redirect("/Player.html");
+            return "";
+        });
+
         post("/login", (req, res) -> {
             String usr = req.queryParams("username");
             String pwd = req.queryParams("password");
@@ -73,24 +91,24 @@ public class Main {
 
             boolean valid = false;
 
-            if(usr.equals("username")) {
-                if(pwd.equals("password")) {
-                    valid = true;
+            for(int i = 0; i < players.size(); i++)
+            {
+                if(usr.equals(players.get(i).getUsername())) {
+                    if(pwd.equals(players.get(i).getPassword())) {
+                        valid = true;
+                    }
                 }
             }
 
             if(valid) {
+                System.out.println("valid!");
                 res.cookie("HASH", "0");    // places a cookie!
-                res.redirect("/Board.html");    // should eventually be User's page
+                res.redirect("/Player.html");    // should eventually be User's page
             } else {
+                System.out.println("invalid!");
                 res.redirect("/Login.html");
             }
             return "";  // doesn't override the redirect above, but is this necessary/dangerous?
-        });
-
-        post("/signup", (req, res) -> {
-
-            return "";
         });
 
         post("/logout", (req, res) -> {
