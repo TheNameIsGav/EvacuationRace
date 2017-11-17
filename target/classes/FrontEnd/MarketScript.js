@@ -62,9 +62,6 @@ function newChatMessage() {
                 console.error(xhr.statusText);
             };
             xhr.send(message);
-
-<<<<<<< HEAD
-=======
     }
 }
 
@@ -75,7 +72,6 @@ function chatManipulation (chat) {
     for(var i = splitter.length; i >= 0; i--)
     {
         splitter[i] = splitter[i] + "<br> \n";
->>>>>>> 695f688378f988d3cb90d34cdb54d3bd8be78bd9
     }
     for(var j = 0; j < splitter.length-1; j++)
     {
