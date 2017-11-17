@@ -2,6 +2,35 @@ document.getElementById("chatTextArea").addEventListener("keypress", newChatMess
 
 document.getElementById("chatSendButton").addEventListener("click", newChatMessage);
 
+//window.onload = function () {
+//    var interval = setInterval(function(){reloadChat()}, 500)
+//}
+
+function reloadChat(){
+            var parser = "";
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:4567/chat/loadChat", true);
+            xhr.onload = function (f) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                             parser = xhr.responseText;
+                             var temp = chatManipulation(parser);
+                             document.getElementById("messages").innerHTML = temp;
+                    } else {
+
+                        console.error(xhr.status);
+                    }
+                }
+            };
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
+
+}
+
+
+
 function newChatMessage() {
     if (event.type === "click" || (event.type === "keypress" && event.keyCode === 13)) {
         event.preventDefault();
@@ -33,7 +62,10 @@ function newChatMessage() {
                 console.error(xhr.statusText);
             };
             xhr.send(message);
+<<<<<<< HEAD
 
+=======
+>>>>>>> Beta
     }
 }
 
@@ -51,6 +83,25 @@ function chatManipulation (chat) {
     }
     return finalStr;
 }
+<<<<<<< HEAD
+=======
+
+function chatManipulation (chat) {
+    var finalStr = "";
+    chat = chat.substring(1).slice(0, -1);
+    var splitter = chat.split(", ");
+    for(var i = splitter.length; i >= 0; i--)
+    {
+        splitter[i] = splitter[i] + "<br> \n";
+    }
+    for(var j = 0; j < splitter.length-1; j++)
+    {
+        finalStr = finalStr + splitter[j];
+    }
+    return finalStr;
+}
+
+>>>>>>> Beta
 
 function POST(string, destination) {
     var xhr = new XMLHttpRequest();
@@ -132,7 +183,7 @@ function newTrade() {
         "senderID" : "12345", //sender here
         "recieverID" : "12345", //reciever here
         "senderTradeValues" : tradeRequestValuesSender,
-        "recieverTradeValues" : tradeRequestValuesReciever 
+        "recieverTradeValues" : tradeRequestValuesReciever
     }
     POST(JSON.stringify(trade), "/trade/createRequest")
 }
