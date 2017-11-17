@@ -10,9 +10,46 @@ function newChatMessage() {
             "message" : document.getElementById("chatTextArea").value
         }
         document.getElementById("chatTextArea").value = "";
-        POST(JSON.stringify(message), "/chat/createMessage");
-        GET("/chat/createMessage", "messages");
+
+            message = JSON.stringify(message);
+            var parser = "";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:4567/chat/createMessage", true);
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+
+                    if (xhr.status === 200) {
+                             parser = xhr.responseText;
+                             var temp = chatManipulation(parser);
+                             console.log(temp);
+                             document.getElementById("messages").innerHTML = temp;
+                    } else {
+
+                        console.error(xhr.status);
+                    }
+                }
+            };
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(message);
+
     }
+}
+
+function chatManipulation (chat) {
+    var finalStr = "";
+    chat = chat.substring(1).slice(0, -1);
+    var splitter = chat.split(", ");
+    for(var i = splitter.length; i >= 0; i--)
+    {
+        splitter[i] = splitter[i] + "<br> \n";
+    }
+    for(var j = 0; j < splitter.length-1; j++)
+    {
+        finalStr = finalStr + splitter[j];
+    }
+    return finalStr;
 }
 
 
@@ -96,7 +133,7 @@ function newTrade() {
         "senderID" : "12345", //sender here
         "recieverID" : "12345", //reciever here
         "senderTradeValues" : tradeRequestValuesSender,
-        "recieverTradeValues" : tradeRequestValuesReciever 
+        "recieverTradeValues" : tradeRequestValuesReciever
     }
     POST(JSON.stringify(trade), "/trade/createRequest")
 }
