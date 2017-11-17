@@ -48,11 +48,7 @@ public class Main {
         });
 
         post("/chat/createMessage", (request, response) -> {
-<<<<<<< HEAD
-            logger.info("GET request to /chat/createMessage");
-=======
             logger.info("POST request to /chat/createMessage");
->>>>>>> 695f688378f988d3cb90d34cdb54d3bd8be78bd9
             String[] parts = request.body().split("\"");
             String user = parts[3];
             String message = parts[7];
