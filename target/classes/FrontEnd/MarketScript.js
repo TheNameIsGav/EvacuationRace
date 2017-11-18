@@ -62,7 +62,6 @@ function newChatMessage() {
                 console.error(xhr.statusText);
             };
             xhr.send(message);
-
     }
 }
 

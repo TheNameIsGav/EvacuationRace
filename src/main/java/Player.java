@@ -16,4 +16,23 @@ public class Player {
         password = pwd;
     }
 
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public String getPassword()   //really should not be like this
+    {
+        return password;
+    }
+
+    public void setUsername(String u)
+    {
+        username = u;
+    }
+
+    public void setPassword(String p)   //really should not be like this
+    {
+        password = p;
+    }
 }
