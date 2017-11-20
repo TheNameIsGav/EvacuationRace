@@ -11,8 +11,6 @@ public class Player {
     private static String username;
     private static String password;
 
-    private static ArrayList<String> gameIDs = new ArrayList<String>(0);
-
     public Player(String usr, String pwd){
         username = usr;
         password = pwd;
@@ -36,15 +34,5 @@ public class Player {
     public void setPassword(String p)   //really should not be like this
     {
         password = p;
-    }
-
-    public void addGameID(String id)
-    {
-        gameIDs.add(id);
-    }
-
-    public ArrayList<String> getGameIDs()
-    {
-        return gameIDs;
     }
 }

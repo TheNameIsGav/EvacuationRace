@@ -37,6 +37,8 @@ public class Main {
     /////////////////////////////
 
     public static void main(String[] args) {
+        port(9999);
+
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
 
@@ -78,38 +80,8 @@ public class Main {
             Player p = new Player(usr, pwd);
             players.add(p);
 
-            res.cookie("HASH", usr+"|"+pwd);    // places a cookie!
+            res.cookie("HASH", "0");    // places a cookie!
             res.redirect("/Player.html");
-            return "";
-        });
-
-        Spark.get("/checkCookie", (req, res) -> {
-            System.out.println("/checkCookie accessed");
-
-            boolean valid = false;
-
-            if(req.cookie("HASH").equals("|")||req.cookie("HASH").equals("")||req.cookie("HASH")==null){
-                System.out.println("HASH is null, blank, or empty usr and pwd");
-                valid = false;  //not really necessary?
-            } else {
-                String c = req.cookie("HASH");
-                for(int i = 0; i < players.size(); i++)
-                {
-                    if(c.equals(players.get(i).getUsername()+"|"+players.get(i).getPassword()))
-                    {
-                        //if the hash is in the array, this runs as true for each position?
-                        System.out.println("HASH matches entry number " + i);
-                        valid = true;
-                    }
-                }
-            }
-
-            if(valid){
-                System.out.println("valid cookie");
-            } else {
-                System.out.println("invalid cookie - redirecting");
-                res.redirect("/Login.html");
-            }
             return "";
         });
 
@@ -132,7 +104,7 @@ public class Main {
 
             if(valid) {
                 System.out.println("valid!");
-                res.cookie("HASH", usr+"|"+pwd);    // places a cookie!
+                res.cookie("HASH", "0");    // places a cookie!
                 res.redirect("/Player.html");    // should eventually be User's page
             } else {
                 System.out.println("invalid!");
