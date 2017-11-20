@@ -37,6 +37,8 @@ public class Main {
     /////////////////////////////
 
     public static void main(String[] args) {
+        port(9999);
+
         Logger logger = LoggerFactory.getLogger(Main.class);
         Spark.staticFileLocation("/FrontEnd");
 
