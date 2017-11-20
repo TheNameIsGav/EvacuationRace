@@ -97,6 +97,7 @@ public class Main {
                 {
                     if(c.equals(players.get(i).getUsername()+"|"+players.get(i).getPassword()))
                     {
+                        //if the hash is in the array, this runs as true for each position?
                         System.out.println("HASH matches entry number " + i);
                         valid = true;
                     }
