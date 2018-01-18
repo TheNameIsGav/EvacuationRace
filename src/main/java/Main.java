@@ -73,7 +73,7 @@ public class Main {
 
             // needs if condition here - should reject weird or existing usernames/passwords
 
-            System.out.println("valid!");
+            System.out.println("user added!");
 
             Player p = new Player(usr, pwd);
             players.add(p);
